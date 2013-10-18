@@ -67,5 +67,48 @@ module EnterpriseChef
         end
       end
     end
+
+    # Determine if the machine is set up for a standalone topology
+    #
+    # @param node [Chef::Node] node
+    # @return [Boolean]
+    def standalone?(node)
+      node['private_chef']['topology'] == 'standalone'
+    end
+
+    # Determine if the machine is set up for a tiered topology
+    #
+    # @param node [Chef::Node] node
+    # @return [Boolean]
+    def tier?(node)
+      node['private_chef']['topology'] == 'tier'
+    end
+
+    # Determine if the machine is set up for a HA topology
+    #
+    # @param node [Chef::Node] node
+    # @return [Boolean]
+    def ha?(node)
+      node['private_chef']['topology'] == 'ha'
+    end
+
+    # Determine if the machine should be running backend services,
+    # regardless of topology.
+    #
+    # @param node [Chef::Node] node
+    # @return [Boolean]
+    def backend?(node)
+      standalone?(node) || node['private_chef']['role'] == 'backend'
+    end
+
+    # Determine if the machine should be running frontend services,
+    # regardless of topology.
+    #
+    # @param node [Chef::Node] node
+    # @return [Boolean]
+    def frontend?(node)
+      standalone?(node) || node['private_chef']['role'] == 'frontend'
+    end
+
   end
 end
