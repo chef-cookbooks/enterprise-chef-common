@@ -28,7 +28,7 @@ define :component_runit_service, :log_directory => nil,
     )
   end
 
-  if :action == :down
+  if params[:action] == :down
     log "stop runit_service[#{component}]" do
       notifies :down, "runit_service[#{component}]", :immediately
     end
