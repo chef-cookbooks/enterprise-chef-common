@@ -72,7 +72,7 @@ module EnterpriseChef
     #
     # @param node [Chef::Node] node
     # @return [Boolean]
-    def standalone?(node)
+    def self.standalone?(node)
       node['private_chef']['topology'] == 'standalone'
     end
 
@@ -80,7 +80,7 @@ module EnterpriseChef
     #
     # @param node [Chef::Node] node
     # @return [Boolean]
-    def tier?(node)
+    def self.tier?(node)
       node['private_chef']['topology'] == 'tier'
     end
 
@@ -88,7 +88,7 @@ module EnterpriseChef
     #
     # @param node [Chef::Node] node
     # @return [Boolean]
-    def ha?(node)
+    def self.ha?(node)
       node['private_chef']['topology'] == 'ha'
     end
 
@@ -97,7 +97,7 @@ module EnterpriseChef
     #
     # @param node [Chef::Node] node
     # @return [Boolean]
-    def backend?(node)
+    def self.backend?(node)
       standalone?(node) || node['private_chef']['role'] == 'backend'
     end
 
@@ -106,7 +106,7 @@ module EnterpriseChef
     #
     # @param node [Chef::Node] node
     # @return [Boolean]
-    def frontend?(node)
+    def self.frontend?(node)
       standalone?(node) || node['private_chef']['role'] == 'frontend'
     end
 
