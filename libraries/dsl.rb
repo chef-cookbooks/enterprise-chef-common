@@ -1,4 +1,5 @@
 require_relative 'helpers'
+require_relative 'service_helpers'
 
 module EnterpriseChef
 
@@ -25,6 +26,11 @@ module EnterpriseChef
       end
     end
 
+    EnterpriseChef::ServiceHelpers.singleton_class.instance_methods(false).each do |name|
+      define_method(name) do |service_name|
+        EnterpriseChef::ServiceHelpers.send(name, service_name)
+      end
+    end
   end
 end
 
