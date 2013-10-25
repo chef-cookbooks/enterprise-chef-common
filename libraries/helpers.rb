@@ -68,6 +68,15 @@ module EnterpriseChef
       end
     end
 
+    # Determine if the machine is currently operating as the secondary
+    # backend in an HA setup.
+    #
+    # @param node [Chef::Node] node
+    # @return [Boolean]
+    def self.backend_secondary?(node)
+      ha?(node) && backend?(node) && !is_data_master?(node)
+    end
+
     # Determine if the machine is set up for a standalone topology
     #
     # @param node [Chef::Node] node
