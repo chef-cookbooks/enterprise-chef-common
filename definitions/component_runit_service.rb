@@ -1,11 +1,17 @@
-define :component_runit_service, :log_directory => nil,
+# A runit service wrapper for a chef component
+#
+# :package defines which part of the node attributes we should look in for configuration
+# as it different for each add-on e.g. :package => 'reporting' or :package => 'pushy'
+#
+define :component_runit_service, :package => 'private_chef',
+                                 :log_directory => nil,
                                  :svlogd_size => nil,
                                  :svlogd_num => nil,
                                  :ha => nil,
                                  :control => nil,
                                  :action => :enable do
   component = params[:name]
-  log_directory = params[:log_directory] || node['private_chef'][component]['log_directory']
+  log_directory = params[:log_directory] || node[package][component]['log_directory']
 
   template "#{log_directory}/config" do
     source "config.svlogd"
@@ -14,8 +20,8 @@ define :component_runit_service, :log_directory => nil,
     owner "root"
     group "root"
     variables(
-      :svlogd_size => ( params[:svlogd_size] || node['private_chef'][component]['log_rotation']['file_maxbytes']),
-      :svlogd_num  => ( params[:svlogd_num] || node['private_chef'][component]['log_rotation']['num_to_keep'])
+      :svlogd_size => ( params[:svlogd_size] || node[package][component]['log_rotation']['file_maxbytes']),
+      :svlogd_num  => ( params[:svlogd_num] || node[package][component]['log_rotation']['num_to_keep'])
     )
   end
 
@@ -40,7 +46,13 @@ define :component_runit_service, :log_directory => nil,
   # looking for a 'keepalive_me' sentinel file in the service's
   # directory.
   if EnterpriseChef::Helpers.ha?(node)
-    is_keepalive_service = params[:ha] || node['private_chef'][component]['ha']
+    # We need special handling for the ha param, as it's a boolean and
+    # could be false, so we explicitly check for nil?
+    is_keepalive_service = if params[:ha].nil?
+                             node[package][component]['ha']
+                           else
+                             params[:ha]
+                           end
     file "#{node['runit']['sv_dir']}/#{component}/keepalive_me" do
       action is_keepalive_service ? :create : :delete
     end
