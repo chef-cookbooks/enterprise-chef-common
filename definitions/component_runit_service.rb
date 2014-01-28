@@ -1,3 +1,8 @@
+# A runit service wrapper for a chef component
+#
+# :package defines which part of the node attributes we should look in for configuration
+# as it different for each add-on e.g. :package => 'reporting' or :package => 'pushy'
+#
 define :component_runit_service, :package => 'private_chef',
                                  :log_directory => nil,
                                  :svlogd_size => nil,
