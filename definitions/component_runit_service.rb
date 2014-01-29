@@ -10,6 +10,7 @@ define :component_runit_service, :package => 'private_chef',
                                  :ha => nil,
                                  :control => nil,
                                  :action => :enable do
+  package = params[:package]
   component = params[:name]
   log_directory = params[:log_directory] || node[package][component]['log_directory']
 
