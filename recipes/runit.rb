@@ -4,11 +4,14 @@
 # All Rights Reserved
 #
 
-node.set['runit']['sv_bin']       = '/opt/opscode/embedded/bin/sv'
-node.set['runit']['chpst_bin']    = '/opt/opscode/embedded/bin/chpst'
-node.set['runit']['service_dir']  = '/opt/opscode/service'
-node.set['runit']['sv_dir']       = '/opt/opscode/sv'
-node.set['runit']['lsb_init_dir'] = '/opt/opscode/init'
+project_name = node['enterprise']['name']
+install_path = node[project_name]['install_path']
+
+node.set['runit']['sv_bin']       = "#{install_path}/embedded/bin/sv"
+node.set['runit']['chpst_bin']    = "#{install_path}/embedded/bin/chpst"
+node.set['runit']['service_dir']  = "#{install_path}/service"
+node.set['runit']['sv_dir']       = "#{install_path}/sv"
+node.set['runit']['lsb_init_dir'] = "#{install_path}/init"
 
 case node['platform_family']
 when 'debian'
