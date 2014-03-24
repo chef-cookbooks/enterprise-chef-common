@@ -13,9 +13,14 @@ top-level (non add-on) project, set it to your project name.
 
 In addition, you need to have:
 
-    node[project_name]['install_path']
-    node[project_name]['sysvinit_id']
-    node[project_name]['topology']
-    node[project_name]['role']
-    node[project_name]['servers'][node_name]['bootstrap']
-    node[project_name]['keepalived']['dir']
+* `node[project_name]['install_path']` the install location for your
+  omnibus project (e.g. `/opt/opscode`).
+* `node[project_name]['sysvinit_id']` an identifier used in
+    `/etc/inittab` (default is `'SV'`). Needs to be a unique (for the
+    file) sequence of 1-4 characters.
+* `node[project_name]['topology']` one of `standalone`, `tier`, or `ha`.
+* `node[project_name]['role']` either `backend` or `frontent`.
+* `node[project_name]['servers'][node_name]['bootstrap']` is used to
+  determine if the node is installation bootstrap server. Value is
+  treated as boolean.
+* `node[project_name]['keepalived']['dir']` directory for keepalived.
