@@ -16,11 +16,16 @@ node.set['runit']['lsb_init_dir'] = "#{install_path}/init"
 case node['platform_family']
 when 'debian'
   include_recipe 'enterprise::runit_upstart'
-when 'rhel'
-  if node['platform_version'] =~ /^6/
+when 'fedora', 'rhel'
+  case node['platform']
+  when 'amazon', 'fedora'
     include_recipe 'enterprise::runit_upstart'
   else
-    include_recipe 'enterprise::runit_sysvinit'
+    if node['platform_version'] =~ /^6/
+      include_recipe 'enterprise::runit_upstart'
+    else
+      include_recipe 'enterprise::runit_sysvinit'
+    end
   end
 else
   include_recipe 'enterprise::runit_sysvinit'
