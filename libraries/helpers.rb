@@ -13,14 +13,15 @@ module EnterpriseChef
     # @param [Chef::Node] node
     # @return [Boolean]
     def self.is_bootstrap_server?(node)
-      case node['private_chef']['topology']
+      project_name = node['enterprise']['name']
+      case node[project_name]['topology']
       when 'standalone', 'manual'
         true
       when 'tier'
-        node['private_chef']['role'] == 'backend'
+        node[project_name]['role'] == 'backend'
       when 'ha'
         node_name = node['fqdn']
-        !!(node['private_chef']['servers'][node_name]['bootstrap'])
+        !!(node[project_name]['servers'][node_name]['bootstrap'])
       end
     end
 
@@ -38,9 +39,9 @@ module EnterpriseChef
     # @param node [Chef::Node] node
     # @return [Boolean]
     def self.is_data_master?(node)
-
-      topology = node['private_chef']['topology']
-      role = node['private_chef']['role']
+      project_name = node['enterprise']['name']
+      topology = node[project_name]['topology']
+      role = node[project_name]['role']
 
       case topology
       when 'standalone'
@@ -49,7 +50,7 @@ module EnterpriseChef
         role == 'backend'
       when 'ha'
         if (role == 'backend')
-          dir = node['private_chef']['keepalived']['dir']
+          dir = node[project_name]['keepalived']['dir']
           cluster_status_file = "#{dir}/current_cluster_status"
 
           if File.exists?(cluster_status_file)
@@ -82,7 +83,8 @@ module EnterpriseChef
     # @param node [Chef::Node] node
     # @return [Boolean]
     def self.standalone?(node)
-      node['private_chef']['topology'] == 'standalone'
+      project_name = node['enterprise']['name']
+      node[project_name]['topology'] == 'standalone'
     end
 
     # Determine if the machine is set up for a tiered topology
@@ -90,7 +92,8 @@ module EnterpriseChef
     # @param node [Chef::Node] node
     # @return [Boolean]
     def self.tier?(node)
-      node['private_chef']['topology'] == 'tier'
+      project_name = node['enterprise']['name']
+      node[project_name]['topology'] == 'tier'
     end
 
     # Determine if the machine is set up for a HA topology
@@ -98,7 +101,8 @@ module EnterpriseChef
     # @param node [Chef::Node] node
     # @return [Boolean]
     def self.ha?(node)
-      node['private_chef']['topology'] == 'ha'
+      project_name = node['enterprise']['name']
+      node[project_name]['topology'] == 'ha'
     end
 
     # Determine if the machine should be running backend services,
@@ -107,7 +111,8 @@ module EnterpriseChef
     # @param node [Chef::Node] node
     # @return [Boolean]
     def self.backend?(node)
-      standalone?(node) || node['private_chef']['role'] == 'backend'
+      project_name = node['enterprise']['name']
+      standalone?(node) || node[project_name]['role'] == 'backend'
     end
 
     # Determine if the machine should be running frontend services,
@@ -116,7 +121,8 @@ module EnterpriseChef
     # @param node [Chef::Node] node
     # @return [Boolean]
     def self.frontend?(node)
-      standalone?(node) || node['private_chef']['role'] == 'frontend'
+      project_name = node['enterprise']['name']
+      standalone?(node) || node[project_name]['role'] == 'frontend'
     end
 
   end
