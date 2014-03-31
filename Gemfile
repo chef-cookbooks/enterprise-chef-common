@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf', '~> 2.0.12'
+group :development, :test do
+  gem 'pry', '~> 0.9.12'
+end
 
 group :test do
-  gem 'chefspec'
+  gem 'berkshelf', '~> 3.0.0beta7'
+  gem 'chefspec', '~> 3.4.0'
 end
