@@ -9,6 +9,12 @@ describe 'enterprise::runit' do
     stub_command("grep 'SV:123456:respawn:/opt/opscode/embedded/bin/runsvdir-start' /etc/inittab")
     stub_command('initctl status opscode-runsvdir | grep start')
     stub_command('initctl status private-chef-runsvdir | grep stop')
+    stub_command('initctl status testproject-runsvdir | grep stop')
+    stub_command("grep '\#{init_id}:123456:respawn:\#{install_path}/embedded/bin/runsvdir-start' /etc/inittab")
+
+    # Set the node project_name
+    runner.node.set['enterprise']['name'] = 'testproject'
+    runner.node.set['testproject'] = {}
   end
 
   context 'when on Amazon Linux' do
