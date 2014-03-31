@@ -24,3 +24,7 @@ In addition, you need to have:
   determine if the node is installation bootstrap server. Value is
   treated as boolean.
 * `node[project_name]['keepalived']['dir']` directory for keepalived.
+
+## Testing
+
+Run `bundle exec rspec` (after running `bundle install`) to run ChefSpec examples.
