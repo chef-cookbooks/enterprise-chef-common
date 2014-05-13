@@ -32,7 +32,7 @@ action :init do
 
   # Initialize the cluster
   execute "initialize_cluster_#{new_resource.data_dir}" do
-    command "initdb --pgdata #{new_resource.data_dir} --locale C"
+    command "initdb --pgdata #{new_resource.data_dir} --locale C --encoding #{new_resource.encoding}"
     user node[project_name]['postgresql']['username']
     not_if { ::File.exists?(::File.join(new_resource.data_dir, "PG_VERSION")) }
   end
