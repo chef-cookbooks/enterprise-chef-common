@@ -19,7 +19,7 @@ module EnterpriseChef
         true
       when 'tier'
         node[project_name]['role'] == 'backend'
-      when 'ha'
+      when 'ha', 'customha'
         node_name = node['fqdn']
         !!(node[project_name]['servers'][node_name]['bootstrap'])
       end
@@ -48,7 +48,7 @@ module EnterpriseChef
         true # by definition
       when 'tier'
         role == 'backend'
-      when 'ha'
+      when 'ha', 'customha'
         if (role == 'backend')
           dir = node[project_name]['keepalived']['dir']
           cluster_status_file = "#{dir}/current_cluster_status"
@@ -102,7 +102,7 @@ module EnterpriseChef
     # @return [Boolean]
     def self.ha?(node)
       project_name = node['enterprise']['name']
-      node[project_name]['topology'] == 'ha'
+      ['ha', 'customha'].include?(node[project_name]['topology'])
     end
 
     # Determine if the machine should be running backend services,
