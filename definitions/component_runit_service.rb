@@ -57,6 +57,10 @@ define :component_runit_service, :package => 'private_chef',
     file "#{node['runit']['sv_dir']}/#{component}/keepalive_me" do
       action is_keepalive_service ? :create : :delete
     end
+
+    file "#{node['runit']['sv_dir']}/#{component}/down" do
+      action is_keepalive_service ? :create : :delete
+    end
   end
 
 end
