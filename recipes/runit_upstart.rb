@@ -5,6 +5,7 @@
 #
 
 project_name = node['enterprise']['name']
+project_name.gsub!(/_/, '-') if project_name == 'private_chef'
 
 # Ensure the previous named iteration of the system job is nuked
 execute "initctl stop opscode-runsvdir" do
