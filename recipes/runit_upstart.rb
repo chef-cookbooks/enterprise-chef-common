@@ -4,7 +4,7 @@
 # All Rights Reserved
 #
 
-project_name = node['enterprise']['name']
+project_name = node['enterprise']['name'].clone
 project_name.gsub!(/_/, '-') if project_name == 'private_chef'
 
 # Ensure the previous named iteration of the system job is nuked
@@ -22,7 +22,7 @@ template "/etc/init/#{project_name}-runsvdir.conf" do
   group "root"
   mode "0644"
   variables({
-              :install_path => node[project_name]['install_path'],
+              :install_path => node[node['enterprise']['name']]['install_path'],
               :project_name => project_name
   })
   source "init-runsvdir.erb"
