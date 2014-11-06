@@ -7,6 +7,8 @@
 project_name = node['enterprise']['name'].clone
 project_name.gsub!(/_/, '-') if project_name == 'private_chef'
 
+ctl_name = node[node['enterprise']['name']]['ctl_name'] || "#{project_name}-ctl"
+
 # Ensure the previous named iteration of the system job is nuked
 execute "initctl stop opscode-runsvdir" do
   only_if "initctl status opscode-runsvdir | grep start"
@@ -23,7 +25,7 @@ template "/etc/init/#{project_name}-runsvdir.conf" do
   mode "0644"
   variables({
               :install_path => node[node['enterprise']['name']]['install_path'],
-              :project_name => project_name
+              :ctl_name => ctl_name
   })
   source "init-runsvdir.erb"
 end
