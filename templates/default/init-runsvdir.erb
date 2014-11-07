@@ -5,7 +5,7 @@ pre-stop script
    # To avoid Enterprise Chef service processes from being orphaned,
    # we need to ensure everything is stopped before we kill our
    # runsvdir process.
-   /usr/bin/<%= @project_name %>-ctl stop
+   /usr/bin/<%= @ctl_name %> stop
 end script
 post-stop script
    # To avoid stomping on runsv's owned by a different runsvdir
