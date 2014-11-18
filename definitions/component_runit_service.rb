@@ -14,12 +14,19 @@ define :component_runit_service, :package => 'private_chef',
   component = params[:name]
   log_directory = params[:log_directory] || node[package][component]['log_directory']
 
+  # runit resources don't support reloading the log service as an action :(
+  execute "restart_#{component}_log_service" do
+    command "#{node['runit']['sv_bin']} restart #{node['runit']['sv_dir']}/#{component}/log"
+    action :nothing
+  end
+
   template "#{log_directory}/config" do
     source "config.svlogd"
     cookbook "enterprise"
     mode "0644"
     owner "root"
     group "root"
+    notifies :run, "execute[restart_#{component}_log_service]"
     variables(
       :svlogd_size => ( params[:svlogd_size] || node[package][component]['log_rotation']['file_maxbytes']),
       :svlogd_num  => ( params[:svlogd_num] || node[package][component]['log_rotation']['num_to_keep'])
