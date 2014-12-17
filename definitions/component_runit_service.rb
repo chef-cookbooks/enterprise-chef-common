@@ -9,6 +9,7 @@ define :component_runit_service, :package => 'private_chef',
                                  :svlogd_num => nil,
                                  :ha => nil,
                                  :control => nil,
+                                 :runit_attributes => {},
                                  :action => :enable do
   package = params[:package]
   component = params[:name]
@@ -40,6 +41,9 @@ define :component_runit_service, :package => 'private_chef',
     options(
       :log_directory => log_directory
     )
+    params[:runit_attributes].each do |attr_name, attr_value|
+      send(attr_name.to_sym, attr_value)
+    end
   end
 
   if params[:action] == :down
