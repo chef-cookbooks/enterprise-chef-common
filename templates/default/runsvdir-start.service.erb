@@ -1,0 +1,9 @@
+[Unit]
+Description=<%= @project_name %> Runit Process Supervisor
+
+[Service]
+ExecStart=<%= @install_path %>/embedded/bin/runsvdir-start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

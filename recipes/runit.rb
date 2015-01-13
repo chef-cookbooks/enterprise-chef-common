@@ -13,20 +13,24 @@ node.set['runit']['service_dir']  = "#{install_path}/service"
 node.set['runit']['sv_dir']       = "#{install_path}/sv"
 node.set['runit']['lsb_init_dir'] = "#{install_path}/init"
 
-case node['platform_family']
-when 'debian'
-  include_recipe 'enterprise::runit_upstart'
-when 'fedora', 'rhel'
-  case node['platform']
-  when 'amazon', 'fedora'
+if node['init_package'] == 'systemd'
+  include_recipe 'enterprise::runit_systemd'
+else
+  case node['platform_family']
+  when 'debian'
     include_recipe 'enterprise::runit_upstart'
-  else
-    if node['platform_version'] =~ /^6/
+  when 'fedora', 'rhel'
+    case node['platform']
+    when 'amazon', 'fedora'
       include_recipe 'enterprise::runit_upstart'
     else
-      include_recipe 'enterprise::runit_sysvinit'
+      if node['platform_version'] =~ /^6/
+        include_recipe 'enterprise::runit_upstart'
+      else
+        include_recipe 'enterprise::runit_sysvinit'
+      end
     end
+  else
+    include_recipe 'enterprise::runit_sysvinit'
   end
-else
-  include_recipe 'enterprise::runit_sysvinit'
 end
