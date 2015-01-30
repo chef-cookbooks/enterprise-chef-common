@@ -8,6 +8,7 @@ project_name = node['enterprise']['name']
 install_path = node[project_name]['install_path']
 
 node.set['runit']['sv_bin']       = "#{install_path}/embedded/bin/sv"
+node.set['runit']['svlogd_bin']   = "#{install_path}/embedded/bin/svlogd"
 node.set['runit']['chpst_bin']    = "#{install_path}/embedded/bin/chpst"
 node.set['runit']['service_dir']  = "#{install_path}/service"
 node.set['runit']['sv_dir']       = "#{install_path}/sv"
