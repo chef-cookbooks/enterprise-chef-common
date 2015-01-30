@@ -57,7 +57,11 @@ define :component_runit_service, :package => 'private_chef',
   # Our keepalived setup knows which services it must manage by
   # looking for a 'keepalive_me' sentinel file in the service's
   # directory.
-  if EnterpriseChef::Helpers.ha?(node)
+  #
+  # Keepalived only runs on backend nodes.  Services such as oc_id are
+  # run on the backend and frontend, but should only have down files
+  # on the backend
+  if EnterpriseChef::Helpers.ha?(node) && EnterpriseChef::Helpers.backend?(node)
     # We need special handling for the ha param, as it's a boolean and
     # could be false, so we explicitly check for nil?
     is_keepalive_service = if params[:ha].nil?
