@@ -1,29 +1,8 @@
 enterprise cookbook
 ===================
 
-## License
-
-All files in the repository are licensed under the Apache 2.0 license. If any
-file is missing the License header it should assume the following is attached;
-
-```
-Copyright 2014 Chef Software Inc
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
-
-This cookbook provides common functionality needed for Enterprise
-Chef, Pushy, Reporting, and other enterprise-grade Omnibus projects.
+This cookbook provides common functionality needed for Chef server,
+Push jobs, Reporting, and other enterprise-grade Omnibus projects.
 
 Your omnibus project attributes should define the following attributes:
 
@@ -48,4 +27,28 @@ In addition, you need to have:
 
 ## Testing
 
-Run `bundle exec rspec` (after running `bundle install`) to run ChefSpec examples.
+[ChefDK](http://downloads.chef.io/chef-dk/) must be installed (version 0.5.1 at
+the time of this writing.)
+
+Run `chef exec rspec` to run ChefSpec examples.
+
+## License
+
+All files in the repository are licensed under the Apache 2.0 license. If any
+file is missing the License header it should assume the following is attached;
+
+```
+Copyright 2014-2015 Chef Software, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
