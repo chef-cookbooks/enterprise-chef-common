@@ -5,16 +5,14 @@ describe 'enterprise::runit' do
   subject(:chef_run) { runner.converge(described_recipe) }
 
   before :each do
-    # ChefSpec told me to do this
-    stub_command("grep 'SV:123456:respawn:/embedded/bin/runsvdir-start' /etc/inittab")
-    stub_command('initctl status opscode-runsvdir | grep start')
-    stub_command('initctl status private-chef-runsvdir | grep stop')
-    stub_command('initctl status testproject-runsvdir | grep stop')
-    stub_command("grep '\#{init_id}:123456:respawn:\#{install_path}/embedded/bin/runsvdir-start' /etc/inittab")
-
     # Set the node project_name
     runner.node.set['enterprise']['name'] = 'testproject'
-    runner.node.set['testproject'] = {}
+    runner.node.set['testproject']['install_path'] = '/opt/testproject'
+
+    # ChefSpec told me to do this
+    stub_command("grep 'SV:123456:respawn:/opt/testproject/embedded/bin/runsvdir-start' /etc/inittab")
+    stub_command('initctl status opscode-runsvdir | grep start')
+    stub_command('initctl status testproject-runsvdir | grep stop')
   end
 
   context 'when on Amazon Linux' do
