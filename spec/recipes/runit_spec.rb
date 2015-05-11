@@ -117,7 +117,6 @@ RSpec.shared_examples "upstart delete" do
   it "behaves like upstart delete"
 end
 
-
 describe 'enterprise::runit' do
   let(:runner) { ChefSpec::SoloRunner.new }
   subject(:chef_run) { runner.converge(described_recipe) }
@@ -127,16 +126,6 @@ describe 'enterprise::runit' do
     # Set the node project_name
     runner.node.set['enterprise']['name'] = enterprise_name
     runner.node.set['testproject']['install_path'] = '/opt/testproject'
-
-    stub_command("grep 'SV:123456:respawn:/opt/testproject/embedded/bin/runsvdir-start' /etc/inittab")
-  end
-
-  context 'when on RHEL 5' do
-    let(:runner) { ChefSpec::SoloRunner.new(platform: 'redhat', version: '5.9') }
-
-    it 'includes the runit_sysvinit recipe' do
-      expect(chef_run).to include_recipe 'enterprise::runit_sysvinit'
-    end
   end
 
   describe "component_runit_supervisor resource" do
