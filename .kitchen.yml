@@ -1,0 +1,22 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-10.04
+  - name: ubuntu-12.04
+  - name: ubuntu-14.04
+  - name: centos-5.11
+  - name: centos-6.6
+  - name: centos-7.0
+
+suites:
+  - name: default
+    run_list:
+      - recipe[enterprise::runit]
+    attributes:
+      enterprise:
+        name: testproject

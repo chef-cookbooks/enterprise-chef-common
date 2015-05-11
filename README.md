@@ -30,7 +30,13 @@ In addition, you need to have:
 [ChefDK](http://downloads.chef.io/chef-dk/) must be installed (version 0.5.1 at
 the time of this writing.)
 
+### ChefSpec
+
 Run `chef exec rspec` to run ChefSpec examples.
+
+### Test Kitchen
+
+Integration tests can be run with [Test Kitchen](http://kitchen.ci/).
 
 ## License
 
