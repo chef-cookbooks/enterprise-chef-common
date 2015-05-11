@@ -5,7 +5,7 @@
 #
 
 project_name = node['enterprise']['name']
-node.default_unless[node['enterprise']['name']] = {}
+node.default_unless[node['enterprise']['name']] = {} # ~FC047 (See https://github.com/acrmp/foodcritic/issues/225)
 install_path = node[project_name]['install_path']
 
 node.set['runit']['sv_bin']       = "#{install_path}/embedded/bin/sv"
