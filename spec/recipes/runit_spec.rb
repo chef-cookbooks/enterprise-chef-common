@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 RSpec.shared_examples "systemd create" do
-  it "treats private_chef special"
-
   it "renders the unit template" do
     expect(chef_run).to create_template(
       "/usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service"
@@ -32,8 +30,6 @@ RSpec.shared_examples "systemd create" do
 end
 
 RSpec.shared_examples "systemd delete" do
-  it "treats private_chef special"
-
   it "behaves like systemd delete"
 end
 
@@ -43,8 +39,6 @@ RSpec.shared_examples "sysvinit create" do
       "grep 'SV:123456:respawn:/opt/testproject/embedded/bin/runsvdir-start' /etc/inittab"
     ).and_return false
   end
-
-  it "treats private_chef special"
 
   describe "inittab" do
     it "echoes the svdir line to it" do
@@ -62,8 +56,6 @@ RSpec.shared_examples "sysvinit create" do
 end
 
 RSpec.shared_examples "sysvinit delete" do
-  it "treats private_chef special"
-
   it "behaves like sysvinit delete"
 end
 
@@ -72,8 +64,6 @@ RSpec.shared_examples "upstart create" do
     stub_command("initctl status opscode-runsvdir | grep start").and_return true
     stub_command("initctl status #{enterprise_name}-runsvdir | grep stop").and_return true
   end
-
-  it "treats private_chef special"
 
   it "stops the previously named service" do
     expect(chef_run).to run_execute("initctl stop opscode-runsvdir").with(
@@ -109,11 +99,43 @@ RSpec.shared_examples "upstart create" do
       :retries => 30,
     )
   end
+
+  context "when the enterprise_name is private_chef" do
+    let(:enterprise_name) { "private_chef" }
+
+    before :each do
+      stub_command("initctl status private-chef-runsvdir | grep stop").and_return true
+      runner.node.set['private_chef']['install_path'] = "/opt/opscode"
+    end
+
+    it "renders the init template" do
+      expect(chef_run).to create_template("/etc/init/private-chef-runsvdir.conf").with(
+        :owner => "root",
+        :group => "root",
+        :mode => "0644",
+        :source => "init-runsvdir.erb",
+        :variables => {
+          :install_path => "/opt/opscode",
+          :ctl_name => "private-chef-ctl",
+        }
+      )
+    end
+
+    it "runs the status command" do
+      expect(chef_run).to run_execute("initctl status private-chef-runsvdir").with(
+        :retries => 30,
+      )
+    end
+
+    it "runs the start command" do
+      expect(chef_run).to run_execute("initctl start private-chef-runsvdir").with(
+        :retries => 30,
+      )
+    end
+  end
 end
 
 RSpec.shared_examples "upstart delete" do
-  it "treats private_chef special"
-
   it "behaves like upstart delete"
 end
 
