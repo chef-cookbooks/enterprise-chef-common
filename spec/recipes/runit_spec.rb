@@ -26,8 +26,8 @@ describe 'enterprise::runit' do
   context 'when on Debian' do
     let(:runner) { ChefSpec::SoloRunner.new(platform: 'debian', version: '7.4') }
 
-    it 'includes the runit_upstart recipe' do
-      expect(chef_run).to include_recipe 'enterprise::runit_upstart'
+    it 'includes the runit_sysvinit recipe' do
+      expect(chef_run).to include_recipe 'enterprise::runit_sysvinit'
     end
   end
 

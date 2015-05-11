@@ -20,7 +20,12 @@ if node['init_package'] == 'systemd'
 else
   case node['platform_family']
   when 'debian'
-    include_recipe 'enterprise::runit_upstart'
+    case node['platform']
+    when 'debian'
+      include_recipe 'enterprise::runit_sysvinit'
+    else
+      include_recipe 'enterprise::runit_upstart'
+    end
   when 'fedora', 'rhel'
     case node['platform']
     when 'amazon', 'fedora'
