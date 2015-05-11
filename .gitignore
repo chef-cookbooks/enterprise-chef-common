@@ -7,3 +7,7 @@ Berksfile.lock
 .*.sw[a-z]
 *.un~
 /cookbooks
+
+# Test Kitchen
+.kitchen/
+.kitchen.local.yml
