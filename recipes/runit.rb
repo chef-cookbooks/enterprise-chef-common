@@ -38,11 +38,12 @@ else
     else
       if node['platform_version'] =~ /^6/
         include_recipe 'enterprise::runit_upstart'
-      else
-        include_recipe 'enterprise::runit_sysvinit'
       end
     end
-  else
-    include_recipe 'enterprise::runit_sysvinit'
   end
+end
+
+component_runit_supervisor node['enterprise']['name'] do
+  install_path node[node['enterprise']['name']]['install_path']
+  ctl_name node[node['enterprise']['name']]['ctl_name']
 end
