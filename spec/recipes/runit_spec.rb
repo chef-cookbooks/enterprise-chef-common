@@ -29,10 +29,6 @@ RSpec.shared_examples "systemd create" do
   end
 end
 
-RSpec.shared_examples "systemd delete" do
-  it "behaves like systemd delete"
-end
-
 RSpec.shared_examples "sysvinit create" do
   before :each do
     stub_command(
@@ -53,10 +49,6 @@ RSpec.shared_examples "sysvinit create" do
       )).to notify("execute[init q]").to(:run).immediately
     end
   end
-end
-
-RSpec.shared_examples "sysvinit delete" do
-  it "behaves like sysvinit delete"
 end
 
 RSpec.shared_examples "upstart create" do
@@ -135,12 +127,10 @@ RSpec.shared_examples "upstart create" do
   end
 end
 
-RSpec.shared_examples "upstart delete" do
-  it "behaves like upstart delete"
-end
-
 describe 'enterprise::runit' do
-  let(:runner) { ChefSpec::SoloRunner.new }
+  let(:runner) do
+    ChefSpec::SoloRunner.new :step_into => ["component_runit_supervisor"]
+  end
   subject(:chef_run) { runner.converge(described_recipe) }
   let(:enterprise_name) { "testproject" }
 
@@ -154,7 +144,8 @@ describe 'enterprise::runit' do
     describe "action :create" do
       context "when on Amazon Linux" do
         let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "amazon", :version => "2014.03"
+          ChefSpec::SoloRunner.new :platform => "amazon", :version => "2014.03",
+                                   :step_into => ["component_runit_supervisor"]
         end
 
         it_behaves_like "upstart create"
@@ -162,7 +153,8 @@ describe 'enterprise::runit' do
 
       context "when on Debian" do
         let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "debian", :version => "7.4"
+          ChefSpec::SoloRunner.new :platform => "debian", :version => "7.4",
+                                   :step_into => ["component_runit_supervisor"]
         end
 
         it_behaves_like "upstart create"
@@ -170,7 +162,8 @@ describe 'enterprise::runit' do
 
       context "when on Fedora" do
         let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "fedora", :version => "20"
+          ChefSpec::SoloRunner.new :platform => "fedora", :version => "20",
+                                   :step_into => ["component_runit_supervisor"]
         end
 
         it_behaves_like "upstart create"
@@ -178,7 +171,8 @@ describe 'enterprise::runit' do
 
       context "when on RHEL 5" do
         let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "redhat", :version => "5.9"
+          ChefSpec::SoloRunner.new :platform => "redhat", :version => "5.9",
+                                   :step_into => ["component_runit_supervisor"]
         end
 
         it_behaves_like "sysvinit create"
@@ -186,7 +180,8 @@ describe 'enterprise::runit' do
 
       context "when on RHEL 6" do
         let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "redhat", :version => "6.5"
+          ChefSpec::SoloRunner.new :platform => "redhat", :version => "6.5",
+                                   :step_into => ["component_runit_supervisor"]
         end
 
         it_behaves_like "upstart create"
@@ -194,7 +189,7 @@ describe 'enterprise::runit' do
 
       context "when on RHEL 7 with systemd" do
         let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "redhat", :version => "7.0" do |node|
+          ChefSpec::SoloRunner.new :platform => "redhat", :version => "7.0", :step_into => ["component_runit_supervisor"] do |node|
             node.default['init_package'] = "systemd"
           end
         end
@@ -204,70 +199,11 @@ describe 'enterprise::runit' do
 
       context "when on Ubuntu" do
         let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "ubuntu", :version => "12.04"
+          ChefSpec::SoloRunner.new :platform => "ubuntu", :version => "12.04",
+                                   :step_into => ["component_runit_supervisor"]
         end
 
         it_behaves_like "upstart create"
-      end
-    end
-
-    describe "action :delete" do
-      context "when on Amazon Linux" do
-        let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "amazon", :version => "2014.03"
-        end
-
-        it_behaves_like "upstart delete"
-      end
-
-      context "when on Debian" do
-        let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "debian", :version => "7.4"
-        end
-
-        it_behaves_like "upstart delete"
-      end
-
-      context "when on Fedora" do
-        let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "fedora", :version => "20"
-        end
-
-        it_behaves_like "upstart delete"
-      end
-
-      context "when on RHEL 5" do
-        let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "redhat", :version => "5.9"
-        end
-
-        it_behaves_like "sysvinit delete"
-      end
-
-      context "when on RHEL 6" do
-        let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "redhat", :version => "6.5"
-        end
-
-        it_behaves_like "upstart delete"
-      end
-
-      context "when on RHEL 7 with systemd" do
-        let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "redhat", :version => "7.0" do |node|
-            node.default['init_package'] = "systemd"
-          end
-        end
-
-        it_behaves_like "systemd delete"
-      end
-
-      context "when on Ubuntu" do
-        let(:runner) do
-          ChefSpec::SoloRunner.new :platform => "ubuntu", :version => "12.04"
-        end
-
-        it_behaves_like "upstart delete"
       end
     end
   end
