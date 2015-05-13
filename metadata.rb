@@ -1,7 +1,7 @@
 name             'enterprise'
-license          'All rights reserved'
-description      'Installs common libraries and resources for Enterprise Chef and closed-source additions'
-long_description 'Installs common libraries and resources for Enterprise Chef and closed-source additions'
+license          'Apache 2.0'
+description      'Installs common libraries and resources for Chef server and add-ons'
+long_description 'Installs common libraries and resources for Chef server and add-ons'
 version          '0.5.2'
 
 depends          'runit', '> 1.0.0'
