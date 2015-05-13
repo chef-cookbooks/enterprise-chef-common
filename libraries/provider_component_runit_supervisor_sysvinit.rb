@@ -23,10 +23,6 @@ class Chef
           end
         end
 
-        def action_delete
-          log "not yet implemented"
-        end
-
         def whyrun_supported?
           true
         end

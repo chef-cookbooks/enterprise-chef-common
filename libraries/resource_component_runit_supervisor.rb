@@ -4,7 +4,7 @@ class Chef
   class Resource
     class ComponentRunitSupervisor < Chef::Resource::LWRPBase
       self.resource_name = :component_runit_supervisor
-      actions :create, :delete
+      actions :create
       default_action :create
 
       attribute :name, :kind_of => String, :name_attribute => true
