@@ -11,7 +11,21 @@ class Chef
         use_inline_resources
 
         def action_create
-          log "not yet implemented"
+          template "/usr/lib/systemd/system/#{unit_name}" do
+            owner "root"
+            group "root"
+            mode "0644"
+            variables({
+              :install_path => new_resource.install_path,
+              :project_name => new_resource.name,
+            })
+            source "runsvdir-start.service.erb"
+          end
+
+          service unit_name do
+            action [:enable, :start]
+            provider Chef::Provider::Service::Systemd
+          end
         end
 
         def action_delete
@@ -20,6 +34,10 @@ class Chef
 
         def whyrun_supported?
           true
+        end
+
+        def unit_name
+          "#{new_resource.name}-runsvdir-start.service"
         end
       end
     end
