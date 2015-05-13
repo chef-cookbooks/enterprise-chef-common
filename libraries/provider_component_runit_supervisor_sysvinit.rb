@@ -5,8 +5,9 @@ class Chef
     class ComponentRunitSupervisor
       class Sysvinit < Chef::Provider::LWRPBase
         provides :component_runit_supervisor, :platform_family => "rhel" do |node|
-          node['platform_version'] =~ /^5/
+          node['platform_version'].to_i == 5
         end
+
         use_inline_resources
 
         def action_create

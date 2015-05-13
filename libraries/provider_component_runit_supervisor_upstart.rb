@@ -6,10 +6,9 @@ class Chef
       class Upstart < Chef::Provider::LWRPBase
         provides :component_runit_supervisor, :platform_family => "debian"
         provides :component_runit_supervisor, :platform_family => "rhel" do |node|
-          node['platform_version'] =~ /^6/
+          node['platform_version'].to_i == 6
         end
-        provides :component_runit_supervisor, :platform => "amazon"
-        provides :component_runit_supervisor, :platform => "fedora"
+        provides :component_runit_supervisor, :platform => %w[ amazon fedora ]
 
         use_inline_resources
 
