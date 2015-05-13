@@ -181,7 +181,7 @@ describe 'enterprise::runit' do
         it_behaves_like "upstart create"
       end
 
-      context "when on RHEL 5", :focus => true do
+      context "when on RHEL 5" do
         let(:runner) do
           ChefSpec::SoloRunner.new :platform => "redhat", :version => "5.9",
                                    :step_into => ["component_runit_supervisor"]
