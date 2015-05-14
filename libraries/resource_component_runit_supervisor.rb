@@ -9,7 +9,7 @@ class Chef
 
       attribute :name, :kind_of => String, :name_attribute => true
       attribute :ctl_name, :kind_of => String
-      attribute :init_id, :kind_of => String, :default => "SV"
+      attribute :sysvinit_id, :kind_of => String, :default => "SV"
       attribute :install_path, :kind_of => String
     end
   end

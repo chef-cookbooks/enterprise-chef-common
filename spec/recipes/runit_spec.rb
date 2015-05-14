@@ -12,7 +12,7 @@ describe 'enterprise::runit' do
   it "creates a component_runit_supervisor" do
     expect(chef_run).to create_component_runit_supervisor("testproject").with(
       :ctl_name => "testproject-ctl",
-      :init_id => "TP",
+      :sysvinit_id => "TP",
       :install_path => "/opt/testproject",
     )
   end

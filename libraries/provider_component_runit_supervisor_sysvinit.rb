@@ -12,7 +12,7 @@ class Chef
         use_inline_resources
 
         def action_create
-          svdir_line = "#{new_resource.init_id}:123456:respawn:#{new_resource.install_path}/embedded/bin/runsvdir-start"
+          svdir_line = "#{new_resource.sysvinit_id}:123456:respawn:#{new_resource.install_path}/embedded/bin/runsvdir-start"
 
           execute "echo '#{svdir_line}' >> /etc/inittab" do
             not_if "grep '#{svdir_line}' /etc/inittab"
