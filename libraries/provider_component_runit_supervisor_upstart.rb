@@ -4,11 +4,11 @@ class Chef
   class Provider
     class ComponentRunitSupervisor
       class Upstart < Chef::Provider::LWRPBase
-        provides :component_runit_supervisor, :platform_family => "debian"
         provides :component_runit_supervisor, :platform_family => "rhel" do |node|
           node['platform_version'].to_i == 6
         end
-        provides :component_runit_supervisor, :platform => %w[ amazon fedora ]
+        provides :component_runit_supervisor,
+          :platform => %w[ amazon fedora ubuntu ]
 
         use_inline_resources
 

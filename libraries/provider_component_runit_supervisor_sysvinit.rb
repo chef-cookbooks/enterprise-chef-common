@@ -4,6 +4,7 @@ class Chef
   class Provider
     class ComponentRunitSupervisor
       class Sysvinit < Chef::Provider::LWRPBase
+        provides :component_runit_supervisor, :platform => "debian"
         provides :component_runit_supervisor, :platform_family => "rhel" do |node|
           node['platform_version'].to_i == 5
         end
