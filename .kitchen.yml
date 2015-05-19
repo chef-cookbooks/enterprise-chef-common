@@ -20,3 +20,16 @@ suites:
     attributes:
       enterprise:
         name: testproject
+  - name: component_runit_supervisor_create
+    run_list:
+      - recipe[enterprise_test::component_runit_supervisor_create]
+    attributes:
+      enterprise:
+        name: testproject
+  - name: component_runit_supervisor_delete
+    run_list:
+      - recipe[enterprise_test::component_runit_supervisor_create]
+      - recipe[enterprise_test::component_runit_supervisor_delete]
+    attributes:
+      enterprise:
+        name: testproject

@@ -12,6 +12,7 @@ class Chef
 
         def action_create
           template "/usr/lib/systemd/system/#{unit_name}" do
+            cookbook "enterprise"
             owner "root"
             group "root"
             mode "0644"

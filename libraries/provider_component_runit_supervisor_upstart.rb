@@ -24,6 +24,7 @@ class Chef
           end
 
           template "/etc/init/#{project_name}-runsvdir.conf" do
+            cookbook "enterprise"
             owner "root"
             group "root"
             mode "0644"
