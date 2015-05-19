@@ -48,6 +48,12 @@ class Chef
           end
         end
 
+        def action_delete
+          file "/etc/init/#{project_name}-runsvdir.conf" do
+            action :delete
+          end
+        end
+
         def whyrun_supported?
           true
         end

@@ -126,6 +126,46 @@ RSpec.shared_examples "upstart create" do
   end
 end
 
+RSpec.shared_examples "systemd delete" do
+  it "deletes the unit file" do
+    expect(chef_run).to delete_file(
+      "/usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service"
+    )
+  end
+
+  it "stops all child services"
+  it "stops the service"
+  it "disables the service"
+end
+
+RSpec.shared_examples "sysvinit delete" do
+  it "deletes the line from the inittab"
+  it "stops all child services"
+  it "stops the service"
+  it "disables the service"
+end
+
+RSpec.shared_examples "upstart delete" do
+  it "deletes the init file" do
+    expect(chef_run).to delete_file("/etc/init/#{enterprise_name}-runsvdir.conf")
+  end
+
+  context "when the enterprise_name is private_chef" do
+    let(:enterprise_name) { "private_chef" }
+
+    it "deletes the init file" do
+      expect(chef_run).to delete_file("/etc/init/private-chef-runsvdir.conf")
+    end
+
+    it "stops all child services"
+    it "stops the service"
+    it "disables the service"
+  end
+
+  it "stops all child services"
+  it "stops the service"
+  it "disables the service"
+end
 
 describe "enterprise_test::component_runit_supervisor_create" do
   let(:runner) do
@@ -203,6 +243,87 @@ describe "enterprise_test::component_runit_supervisor_create" do
         end
 
         it_behaves_like "upstart create"
+      end
+    end
+  end
+end
+
+describe "enterprise_test::component_runit_supervisor_delete" do
+  let(:runner) do
+    ChefSpec::SoloRunner.new :step_into => ["component_runit_supervisor"]
+  end
+  subject(:chef_run) { runner.converge(described_recipe) }
+  let(:enterprise_name) { "testproject" }
+
+  before :each do
+    # Set the node project_name
+    runner.node.set['enterprise']['name'] = enterprise_name
+  end
+
+  describe "component_runit_supervisor resource" do
+    describe "action :delete" do
+      context "when on Amazon Linux" do
+        let(:runner) do
+          ChefSpec::SoloRunner.new :platform => "amazon", :version => "2014.03",
+                                   :step_into => ["component_runit_supervisor"]
+        end
+
+        it_behaves_like "upstart delete"
+      end
+
+      context "when on Debian" do
+        let(:runner) do
+          ChefSpec::SoloRunner.new :platform => "debian", :version => "7.4",
+                                   :step_into => ["component_runit_supervisor"]
+        end
+
+        it_behaves_like "upstart delete"
+      end
+
+      context "when on Fedora" do
+        let(:runner) do
+          ChefSpec::SoloRunner.new :platform => "fedora", :version => "20",
+                                   :step_into => ["component_runit_supervisor"]
+        end
+
+        it_behaves_like "upstart delete"
+      end
+
+      context "when on RHEL 5" do
+        let(:runner) do
+          ChefSpec::SoloRunner.new :platform => "redhat", :version => "5.9",
+                                   :step_into => ["component_runit_supervisor"]
+        end
+
+        it_behaves_like "sysvinit delete"
+      end
+
+      context "when on RHEL 6" do
+        let(:runner) do
+          ChefSpec::SoloRunner.new :platform => "redhat", :version => "6.5",
+                                   :step_into => ["component_runit_supervisor"]
+        end
+
+        it_behaves_like "upstart delete"
+      end
+
+      context "when on RHEL 7 with systemd" do
+        let(:runner) do
+          ChefSpec::SoloRunner.new :platform => "redhat", :version => "7.0", :step_into => ["component_runit_supervisor"] do |node|
+            node.default['init_package'] = "systemd"
+          end
+        end
+
+        it_behaves_like "systemd delete"
+      end
+
+      context "when on Ubuntu" do
+        let(:runner) do
+          ChefSpec::SoloRunner.new :platform => "ubuntu", :version => "12.04",
+                                   :step_into => ["component_runit_supervisor"]
+        end
+
+        it_behaves_like "upstart delete"
       end
     end
   end

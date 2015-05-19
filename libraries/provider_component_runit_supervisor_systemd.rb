@@ -28,6 +28,12 @@ class Chef
           end
         end
 
+        def action_delete
+          file "/usr/lib/systemd/system/#{unit_name}" do
+            action :delete
+          end
+        end
+
         def whyrun_supported?
           true
         end
