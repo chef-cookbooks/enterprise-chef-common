@@ -7,3 +7,4 @@ long_description 'Installs/Configures enterprise_test'
 version          '0.1.0'
 
 depends 'enterprise'
+depends 'runit'
