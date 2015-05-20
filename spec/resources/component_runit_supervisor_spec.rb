@@ -147,10 +147,21 @@ RSpec.shared_examples "systemd delete" do
 end
 
 RSpec.shared_examples "sysvinit delete" do
-  it "deletes the line from the inittab"
-  it "stops all child services"
-  it "stops the service"
-  it "disables the service"
+  it "deletes the line from the inittab" do
+    expect(chef_run).to run_ruby_block "remove inittab entry"
+  end
+
+  it "notifies execute[init q]" do
+    expect(chef_run.ruby_block("remove inittab entry")).to notify(
+      "execute[init q]"
+    ).to(:run).immediately
+  end
+
+  it "notifies execute[pkill -HUP -P 1 runsv$]" do
+    expect(chef_run.ruby_block("remove inittab entry")).to notify(
+      "execute[pkill -HUP -P 1 runsv$]"
+    ).to(:run).immediately
+  end
 end
 
 RSpec.shared_examples "upstart delete" do

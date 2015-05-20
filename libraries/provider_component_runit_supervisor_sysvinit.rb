@@ -12,8 +12,6 @@ class Chef
         use_inline_resources
 
         def action_create
-          svdir_line = "#{new_resource.sysvinit_id}:123456:respawn:#{new_resource.install_path}/embedded/bin/runsvdir-start"
-
           execute "echo '#{svdir_line}' >> /etc/inittab" do
             not_if "grep '#{svdir_line}' /etc/inittab"
             notifies :run, "execute[init q]", :immediately
@@ -25,10 +23,38 @@ class Chef
         end
 
         def action_delete
+          Dir["#{new_resource.install_path}/service/*"].each do |svc|
+            execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}"
+          end
+
+          ruby_block "remove inittab entry" do
+            block do
+              f = Chef::Util::FileEdit.new "/etc/inittab"
+              f.search_file_delete svdir_line
+              f.write_file
+            end
+            notifies :run, "execute[init q]", :immediately
+            notifies :run, "execute[pkill -HUP -P 1 runsv$]", :immediately
+          end
+
+          execute "init q" do
+            action :nothing
+          end
+
+          # To avoid stomping on runsv's owned by a different runsvdir
+          # process, kill any runsv process that has been orphaned, and is
+          # now owned by init (process 1).
+          execute "pkill -HUP -P 1 runsv$" do
+            action :nothing
+          end
         end
 
         def whyrun_supported?
           true
+        end
+
+        def svdir_line
+          "#{new_resource.sysvinit_id}:123456:respawn:#{new_resource.install_path}/embedded/bin/runsvdir-start"
         end
       end
     end
