@@ -50,6 +50,11 @@ class Chef
         end
 
         def action_delete
+          service "#{project_name}-runsvdir" do
+            provider Chef::Provider::Service::Upstart
+            action [:stop, :disable]
+          end
+
           file "/etc/init/#{project_name}-runsvdir.conf" do
             action :delete
           end

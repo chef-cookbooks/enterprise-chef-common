@@ -24,6 +24,9 @@ class Chef
           end
         end
 
+        def action_delete
+        end
+
         def whyrun_supported?
           true
         end

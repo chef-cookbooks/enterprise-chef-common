@@ -154,6 +154,18 @@ RSpec.shared_examples "sysvinit delete" do
 end
 
 RSpec.shared_examples "upstart delete" do
+  it "stops the service" do
+    expect(chef_run).to stop_service("#{enterprise_name}-runsvdir").with(
+      :provider => Chef::Provider::Service::Upstart
+    )
+  end
+
+  it "disables the service" do
+    expect(chef_run).to disable_service("#{enterprise_name}-runsvdir").with(
+      :provider => Chef::Provider::Service::Upstart
+    )
+  end
+
   it "deletes the init file" do
     expect(chef_run).to delete_file("/etc/init/#{enterprise_name}-runsvdir.conf")
   end
@@ -161,18 +173,22 @@ RSpec.shared_examples "upstart delete" do
   context "when the enterprise_name is private_chef" do
     let(:enterprise_name) { "private_chef" }
 
-    it "deletes the init file" do
-      expect(chef_run).to delete_file("/etc/init/private-chef-runsvdir.conf")
+    it "stops the service" do
+      expect(chef_run).to stop_service("private-chef-runsvdir").with(
+        :provider => Chef::Provider::Service::Upstart
+      )
     end
 
-    it "stops all child services"
-    it "stops the service"
-    it "disables the service"
-  end
+    it "disables the service" do
+      expect(chef_run).to disable_service("private-chef-runsvdir").with(
+        :provider => Chef::Provider::Service::Upstart
+      )
+    end
 
-  it "stops all child services"
-  it "stops the service"
-  it "disables the service"
+      it "deletes the init file" do
+      expect(chef_run).to delete_file("/etc/init/private-chef-runsvdir.conf")
+    end
+  end
 end
 
 describe "enterprise_test::component_runit_supervisor_create" do
@@ -285,7 +301,7 @@ describe "enterprise_test::component_runit_supervisor_delete" do
                                    :step_into => ["component_runit_supervisor"]
         end
 
-        it_behaves_like "upstart delete"
+        it_behaves_like "sysvinit delete"
       end
 
       context "when on Fedora" do

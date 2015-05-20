@@ -29,7 +29,7 @@ end
 # would have been installed in the directory above
 %w[ runsv runsvdir sv ].each do |bin|
   link "/opt/tp/embedded/bin/#{bin}" do
-    to "/usr/sbin/#{bin}"
+    to "#{File.dirname(node['runit']['sv_bin'])}/#{bin}"
   end
 end
 
