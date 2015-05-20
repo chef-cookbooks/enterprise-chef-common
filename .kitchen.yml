@@ -14,12 +14,6 @@ platforms:
   - name: centos-7.0
 
 suites:
-  - name: default
-    run_list:
-      - recipe[enterprise::runit]
-    attributes:
-      enterprise:
-        name: testproject
   - name: component_runit_supervisor_create
     run_list:
       - recipe[enterprise_test::setup]
