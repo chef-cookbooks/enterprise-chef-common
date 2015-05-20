@@ -30,6 +30,11 @@ class Chef
         end
 
         def action_delete
+          service unit_name do
+            action [:stop, :disable]
+            provider Chef::Provider::Service::Systemd
+          end
+
           file "/usr/lib/systemd/system/#{unit_name}" do
             action :delete
           end

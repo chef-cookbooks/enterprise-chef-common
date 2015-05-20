@@ -127,15 +127,23 @@ RSpec.shared_examples "upstart create" do
 end
 
 RSpec.shared_examples "systemd delete" do
+  it "stops the service" do
+    expect(chef_run).to stop_service("#{enterprise_name}-runsvdir-start.service").with(
+      :provider => Chef::Provider::Service::Systemd
+    )
+  end
+
+  it "disables the service" do
+    expect(chef_run).to disable_service("#{enterprise_name}-runsvdir-start.service").with(
+      :provider => Chef::Provider::Service::Systemd
+    )
+  end
+
   it "deletes the unit file" do
     expect(chef_run).to delete_file(
       "/usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service"
     )
   end
-
-  it "stops all child services"
-  it "stops the service"
-  it "disables the service"
 end
 
 RSpec.shared_examples "sysvinit delete" do
