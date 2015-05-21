@@ -2,7 +2,7 @@ require "spec_helper"
 
 if (os[:family] == "redhat" && os[:release].to_i == 5) ||
    os[:family] == "debian"
-  describe command("pgrep -f 'runsvdir.*\/opt\/tp'") do
+  describe command("ps x | grep 'runsvdir.*\/opt\/tp' | grep -v grep") do
     its(:exit_status) { should eq(1) }
   end
 
