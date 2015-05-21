@@ -1,6 +1,12 @@
 # Include system-wide runit
 include_recipe "runit"
 
+# Fake ctl command
+file "/usr/bin/testproject-ctl" do
+  mode "0755"
+  content "#!/bin/sh\nfor file in /opt/tp/service/*; do /opt/tp/embedded/bin/sv stop $file; done"
+end
+
 # Create directories and example services for our project. In real life an
 # omnibus installer would do this
 directory "/opt/tp/embedded/bin" do
