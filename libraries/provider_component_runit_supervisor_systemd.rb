@@ -30,6 +30,12 @@ class Chef
         end
 
         def action_delete
+          Dir["#{new_resource.install_path}/service/*"].each do |svc|
+            execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}" do
+              retries 5
+            end
+          end
+
           service unit_name do
             action [:stop, :disable]
             provider Chef::Provider::Service::Systemd
