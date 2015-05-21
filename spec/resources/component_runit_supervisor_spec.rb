@@ -156,7 +156,7 @@ describe "enterprise_test::component_runit_supervisor_create" do
                                    :step_into => ["component_runit_supervisor"]
         end
 
-        it_behaves_like "upstart create"
+        it_behaves_like "sysvinit create"
       end
 
       context "when on Fedora" do
