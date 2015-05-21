@@ -24,7 +24,9 @@ class Chef
 
         def action_delete
           Dir["#{new_resource.install_path}/service/*"].each do |svc|
-            execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}"
+            execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}" do
+              retries 5
+            end
           end
 
           ruby_block "remove inittab entry" do
@@ -33,6 +35,7 @@ class Chef
               f.search_file_delete svdir_line
               f.write_file
             end
+            only_if "grep '#{svdir_line}' /etc/inittab"
             notifies :run, "execute[init q]", :immediately
             notifies :run, "execute[pkill -HUP -P 1 runsv$]", :immediately
           end
