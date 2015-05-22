@@ -75,7 +75,7 @@ RSpec.shared_examples "upstart create" do
       :source => "init-runsvdir.erb",
       :variables => {
         :install_path => "/opt/tp",
-        :ctl_name => "a-ctl-name-for-testproject",
+        :ctl_name => "testproject-ctl",
       }
     )
   end
@@ -147,6 +147,12 @@ RSpec.shared_examples "systemd delete" do
 end
 
 RSpec.shared_examples "sysvinit delete" do
+  before :each do
+    stub_command(
+      "grep 'TP:123456:respawn:/opt/tp/embedded/bin/runsvdir-start' /etc/inittab"
+    ).and_return true
+  end
+
   it "deletes the line from the inittab" do
     expect(chef_run).to run_ruby_block "remove inittab entry"
   end
