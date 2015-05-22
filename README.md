@@ -14,16 +14,57 @@ top-level (non add-on) project, set it to your project name.
 In addition, you need to have:
 
 * `node[project_name]['install_path']` the install location for your
-  omnibus project (e.g. `/opt/opscode`).
+  omnibus project (e.g. `/opt/chef-server`).
+
+Optional attributes are:
+
 * `node[project_name]['sysvinit_id']` an identifier used in
     `/etc/inittab` (default is `'SV'`). Needs to be a unique (for the
     file) sequence of 1-4 characters.
 * `node[project_name]['topology']` one of `standalone`, `tier`, or `ha`.
-* `node[project_name]['role']` either `backend` or `frontent`.
+* `node[project_name]['role']` either `backend` or `frontend`.
 * `node[project_name]['servers'][node_name]['bootstrap']` is used to
   determine if the node is installation bootstrap server. Value is
   treated as boolean.
 * `node[project_name]['keepalived']['dir']` directory for keepalived.
+
+## Recipes
+
+### runit
+
+Sets the proper attributes to use runit and creates a runit supervisor to be
+used by component runit services.
+
+## Definitions
+
+### component_runit_service
+
+Defines a runit service.
+
+## Resources
+
+### component_runit_supervisor
+
+Creates a runit runsvdir process to monitor component runit processes.
+
+#### Parameters
+
+* `name` - The name of the project
+* `ctl_name` - Name of the command used to manage the services. Defaults to
+  `#{name}-ctl`.
+* `sysvinit_id - Two-letter prefix used to identify the service on
+  sysvinit-style systems. Defaults to `"SV"`.
+* `install_path` - Path where the project is installed.
+
+#### Actions
+
+* `:create` - Create the necessary files and start the runsvdir service.
+
+#### Providers
+
+* `Chef::Provider::ComponentRunitSupervisor::Systemd` - For systems using systemd.
+* `Chef::Provider::ComponentRunitSupervisor::Sysvinit` - For systems using sysvinit.
+* `Chef::Provider::ComponentRunitSupervisor::Upstart` - For systems using Upstart.
 
 ## Testing
 

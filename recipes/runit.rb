@@ -28,6 +28,6 @@ node.set['runit']['lsb_init_dir'] = "#{install_path}/init"
 component_runit_supervisor node['enterprise']['name'] do
   ctl_name node[node['enterprise']['name']]['ctl_name'] ||
     "#{node['enterprise']['name']}-ctl"
-  init_id node[node['enterprise']['name']]['sysvinit_id']
+  sysvinit_id node[node['enterprise']['name']]['sysvinit_id']
   install_path node[node['enterprise']['name']]['install_path']
 end
