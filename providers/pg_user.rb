@@ -12,9 +12,11 @@ use_inline_resources
 action :create do
 
   project_name = node['enterprise']['name']
+  connection_string = "--host #{new_resource.host} --username #{new_resource.admin_username} --password #{new_resource.admin_password}" unless node[project_name]['postgres']['enable']
 
   execute "create_postgres_user_#{new_resource.username}" do
-    command "psql --dbname template1 --command \"#{create_user_query}\""
+    command "psql --dbname template1 #{connection_string unless node[project_name]['postgres']['enable']} \
+  --command \"#{create_user_query}\""
     user node[project_name]['postgresql']['username']
     not_if {user_exist?}
     retries 30
@@ -33,6 +35,7 @@ def user_exist?
   project_name = node['enterprise']['name']
   command = <<-EOM.gsub(/\s+/," ").strip!
     psql --dbname template1
+         #{connection_string unless node[project_name]['postgres']['enable']}
          --tuples-only
          --command "SELECT rolname FROM pg_roles WHERE rolname='#{new_resource.username}';"
     | grep #{new_resource.username}

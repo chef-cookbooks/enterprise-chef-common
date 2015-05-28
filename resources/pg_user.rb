@@ -13,3 +13,15 @@ attribute :password,
 attribute :superuser,
 :kind_of => [TrueClass, FalseClass],
 :default => false
+
+attribute :admin_username,
+:kind_of => String,
+:required => false
+
+attribute :admin_password,
+:kind_of => String,
+:required => false
+
+attribute :host,
+:kind_of => String,
+:required => false
