@@ -12,10 +12,10 @@ use_inline_resources
 action :create do
 
   project_name = node['enterprise']['name']
-  connection_string = "--host #{new_resource.host} --username #{new_resource.admin_username} --password #{new_resource.admin_password}" unless node[project_name]['postgres']['enable']
+  connection_string = "--host #{new_resource.host} --username #{new_resource.admin_username} --password #{new_resource.admin_password}" unless node[project_name]['postgresql']['enable']
 
   execute "create_postgres_user_#{new_resource.username}" do
-    command "psql --dbname template1 #{connection_string unless node[project_name]['postgres']['enable']} \
+    command "psql --dbname template1 #{connection_string unless node[project_name]['postgresql']['enable']} \
   --command \"#{create_user_query}\""
     user node[project_name]['postgresql']['username']
     not_if {user_exist?}

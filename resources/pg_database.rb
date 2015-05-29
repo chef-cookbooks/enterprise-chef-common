@@ -18,11 +18,11 @@ attribute :encoding,
 :kind_of => String,
 :default => "UTF-8"
 
-attribute :admin_username,
+attribute :username,
 :kind_of => String,
 :required => false
 
-attribute :admin_password,
+attribute :password,
 :kind_of => String,
 :required => false
 

@@ -12,7 +12,7 @@ use_inline_resources
 action :create do
 
   project_name = node['enterprise']['name']
-  connection_string = "--host #{new_resource.host} --username #{new_resource.admin_username} --password #{new_resource.admin_password}" unless node[project_name]['postgres']['enable']
+  connection_string = "--host #{new_resource.host} --username #{new_resource.username} --password #{new_resource.password}" unless node[project_name]['postgresql']['enable']
 
   execute "create_database_#{new_resource.database}" do
     command createdb_command
@@ -27,7 +27,7 @@ def createdb_command
   cmd << "--template #{new_resource.template}"
   cmd << "--encoding #{new_resource.encoding}"
   cmd << "--owner #{new_resource.owner}" if new_resource.owner
-  cmd << "#{connection_string}" unless node[project_name]['postgres']['enable']
+  cmd << "#{connection_string}" unless node[project_name]['postgresql']['enable']
   cmd << new_resource.database
   cmd.join(" ")
 end
@@ -36,7 +36,7 @@ def database_exist?
   project_name = node['enterprise']['name']
   command = <<-EOM.gsub(/\s+/," ").strip!
     psql --dbname template1
-         #{connection_string unless node[project_name]['postgres']['enable']}
+         #{connection_string unless node[project_name]['postgresql']['enable']}
          --tuples-only
          --command "SELECT datname FROM pg_database WHERE datname='#{new_resource.database}';"
     | grep #{new_resource.database}
