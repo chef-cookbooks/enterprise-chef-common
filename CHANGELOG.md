@@ -1,4 +1,8 @@
-## Enterprise Cookbook Change Log
+# Enterprise Cookbook Change Log
+
+## 0.6.0 (2015-06-03)
+
+* Add support for external Postgres databases
 
 ## 0.5.2 (2015-02-05)
 
