@@ -17,3 +17,15 @@ attribute :template,
 attribute :encoding,
 :kind_of => String,
 :default => "UTF-8"
+
+attribute :username,
+:kind_of => String,
+:required => false
+
+attribute :password,
+:kind_of => String,
+:required => false
+
+attribute :host,
+:kind_of => String,
+:required => false
