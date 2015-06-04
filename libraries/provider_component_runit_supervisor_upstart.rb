@@ -24,6 +24,7 @@ class Chef
           end
 
           template "/etc/init/#{project_name}-runsvdir.conf" do
+            cookbook "enterprise"
             owner "root"
             group "root"
             mode "0644"
@@ -45,6 +46,17 @@ class Chef
           execute "initctl start #{project_name}-runsvdir" do
             only_if "initctl status #{project_name}-runsvdir | grep stop"
             retries 30
+          end
+        end
+
+        def action_delete
+          service "#{project_name}-runsvdir" do
+            provider Chef::Provider::Service::Upstart
+            action [:stop, :disable]
+          end
+
+          file "/etc/init/#{project_name}-runsvdir.conf" do
+            action :delete
           end
         end
 

@@ -12,6 +12,7 @@ class Chef
 
         def action_create
           template "/usr/lib/systemd/system/#{unit_name}" do
+            cookbook "enterprise"
             owner "root"
             group "root"
             mode "0644"
@@ -25,6 +26,23 @@ class Chef
           service unit_name do
             action [:enable, :start]
             provider Chef::Provider::Service::Systemd
+          end
+        end
+
+        def action_delete
+          Dir["#{new_resource.install_path}/service/*"].each do |svc|
+            execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}" do
+              retries 5
+            end
+          end
+
+          service unit_name do
+            action [:stop, :disable]
+            provider Chef::Provider::Service::Systemd
+          end
+
+          file "/usr/lib/systemd/system/#{unit_name}" do
+            action :delete
           end
         end
 

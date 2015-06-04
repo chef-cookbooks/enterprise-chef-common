@@ -59,6 +59,7 @@ Creates a runit runsvdir process to monitor component runit processes.
 #### Actions
 
 * `:create` - Create the necessary files and start the runsvdir service.
+* `:delete` - Stop the services and the runsvdir service and remove the files.
 
 #### Providers
 
