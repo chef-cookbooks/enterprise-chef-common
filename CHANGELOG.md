@@ -1,5 +1,9 @@
 # Enterprise Cookbook Change Log
 
+## 0.7.0 (2015-06-03)
+
+* Add delete action for component runit supervisor resource
+
 ## 0.6.0 (2015-06-03)
 
 * Add support for external Postgres databases
