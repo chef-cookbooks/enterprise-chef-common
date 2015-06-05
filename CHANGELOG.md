@@ -1,5 +1,9 @@
 # Enterprise Cookbook Change Log
 
+## 0.7.1 (2015-06-05)
+
+* Fix bug with undefined variable in pg\_user and pg\_database resources
+
 ## 0.7.0 (2015-06-03)
 
 * Add delete action for component runit supervisor resource
