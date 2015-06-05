@@ -27,6 +27,11 @@ action :create do
 end
 
 def createdb_command
+  connection_string = []
+  connection_string << "--host #{new_resource.host} " if  new_resource.host
+  connection_string << "--username #{new_resource.username} " if  new_resource.username
+  connection_string << "--password #{new_resource.password} " if  new_resource.password
+  connection_string = connection_string.join(" ")
   cmd = ["createdb"]
   cmd << "--template #{new_resource.template}"
   cmd << "--encoding #{new_resource.encoding}"
