@@ -12,9 +12,9 @@ use_inline_resources
 action :create do
   project_name = node['enterprise']['name']
 
-  ENV['PGHOST'] = new_resource.host
-  ENV['PGUSER'] = new_resource.username
-  ENV['PGPASSWORD'] = new_resource.password
+  ENV['PGHOST'] = new_resource.host if new_resource.host
+  ENV['PGUSER'] = new_resource.username if new_resource.username
+  ENV['PGPASSWORD'] = new_resource.password if new_resource.password
 
   execute "create_database_#{new_resource.database}" do
     command createdb_command

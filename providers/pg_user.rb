@@ -12,9 +12,9 @@ use_inline_resources
 action :create do
   project_name = node['enterprise']['name']
 
-  ENV['PGHOST'] = new_resource.host
-  ENV['PGUSER'] = new_resource.admin_username
-  ENV['PGPASSWORD'] = new_resource.admin_password
+  ENV['PGHOST'] = new_resource.host if new_resource.host
+  ENV['PGUSER'] = new_resource.admin_username if new_resource.admin_username
+  ENV['PGPASSWORD'] = new_resource.admin_password if new_resource.admin_password
 
   execute "create_postgres_user_#{new_resource.username}" do
     command create_user_query_command
