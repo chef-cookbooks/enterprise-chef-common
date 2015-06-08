@@ -31,7 +31,7 @@ describe "enterprise_test::enterprise_pg_user" do
 
     it "uses the username, host, and password" do
       expect(chef_run).to run_execute("create_postgres_user_testuser").with(
-        :command => "psql --dbname template1 --host testhost --username testadminuser --password testadminpass --command \"CREATE USER testuser WITH ENCRYPTED PASSWORD 'testpass';\"",
+        :command => "psql --dbname template1 --command \"CREATE USER testuser WITH ENCRYPTED PASSWORD 'testpass';\"",
         :user => "testuser",
         :retries => 30,
       )
