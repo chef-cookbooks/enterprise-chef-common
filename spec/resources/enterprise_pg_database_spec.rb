@@ -34,7 +34,7 @@ describe "enterprise_test::enterprise_pg_database" do
 
     it "uses the username, host, and password" do
       expect(chef_run).to run_execute("create_database_testdb").with(
-        :command => "createdb --template template0 --encoding UTF-8 --host testhost --username testdbuser --password testpass testdb",
+        :command => "createdb --template template0 --encoding UTF-8 testdb",
         :user => "testuser",
         :retries => 30,
       )

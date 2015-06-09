@@ -12,6 +12,10 @@ use_inline_resources
 action :create do
   project_name = node['enterprise']['name']
 
+  ENV['PGHOST'] = new_resource.host if new_resource.host
+  ENV['PGUSER'] = new_resource.username if new_resource.username
+  ENV['PGPASSWORD'] = new_resource.password if new_resource.password
+
   execute "create_database_#{new_resource.database}" do
     command createdb_command
     user node[project_name]['postgresql']['username']
@@ -21,36 +25,27 @@ action :create do
 end
 
 def createdb_command
-  cmd = ["createdb"]
-  cmd << "--template #{new_resource.template}"
-  cmd << "--encoding #{new_resource.encoding}"
-  cmd << "--owner #{new_resource.owner}" if new_resource.owner
-  cmd << connection_string.to_s
-  cmd << new_resource.database
-  cmd.join(" ")
+  [].tap do |cmd|
+    cmd << 'createdb'
+    cmd << "--template #{new_resource.template}"
+    cmd << "--encoding #{new_resource.encoding}"
+    cmd << "--owner #{new_resource.owner}" if new_resource.owner
+    cmd << new_resource.database
+  end.join(' ')
 end
 
 def database_exist?
   project_name = node['enterprise']['name']
 
-  command = <<-EOM.gsub(/\s+/," ").strip!
-    psql --dbname template1
-         #{connection_string}
-         --tuples-only
-         --command "SELECT datname FROM pg_database WHERE datname='#{new_resource.database}';"
-    | grep #{new_resource.database}
-  EOM
+  cmd = []
+  cmd << 'psql'
+  cmd << '--dbname template1 --tuples-only'
+  cmd << %{--command "SELECT datname FROM pg_database WHERE datname='#{new_resource.database}';"}
+  cmd << "| grep #{new_resource.database}"
+  cmd = cmd.join(' ')
 
-  s = Mixlib::ShellOut.new(command,
+  s = Mixlib::ShellOut.new(cmd,
                            :user => node[project_name]['postgresql']['username'])
   s.run_command
   s.exitstatus == 0
-end
-
-def connection_string
-  @connection_string ||= [].tap do |ary|
-    ary << "--host #{new_resource.host}" if  new_resource.host
-    ary << "--username #{new_resource.username}" if  new_resource.username
-    ary << "--password #{new_resource.password}" if  new_resource.password
-  end.join(" ")
 end
