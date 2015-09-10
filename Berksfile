@@ -1,7 +1,8 @@
-source 'https://api.berkshelf.com'
+source 'https://supermarket.chef.io'
 
 metadata
 
-group :test do
+group :integration do
+  cookbook 'apt'
   cookbook "enterprise_test", :path => "test/fixtures/cookbooks/enterprise_test"
 end
