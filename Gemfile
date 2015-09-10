@@ -1,13 +1,25 @@
-# A sample Gemfile
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
+group :lint do
+  gem 'foodcritic', '~> 4.0'
+  gem 'rubocop', '~> 0.33'
+  gem 'rake'
+end
 
-group :development, :test do
-  # Use Berkshelf for resolving cookbook dependencies
-  gem 'berkshelf', '~> 3.0'
+group :unit do
+  gem 'berkshelf',  '~> 3.2'
+  gem 'chefspec',   '~> 4.3'
+end
 
-  # Use Test Kitchen with Vagrant for converging the build environment
-  gem "chefspec"
-  gem 'test-kitchen',    '~> 1.2'
-  gem 'kitchen-vagrant', '~> 0.14'
+group :kitchen_common do
+  gem 'test-kitchen', '~> 1.4'
+end
+
+group :kitchen_vagrant do
+  gem 'kitchen-vagrant', '~> 0.18'
+end
+
+group :kitchen_cloud do
+  gem 'kitchen-digitalocean'
+  gem 'kitchen-ec2'
 end
