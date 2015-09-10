@@ -1,6 +1,8 @@
 enterprise cookbook
 ===================
 
+[![Build Status](https://travis-ci.org/chef-cookbooks/enterprise-chef-common.svg?branch=master)](http://travis-ci.org/chef-cookbooks/enterprise-chef-common)
+
 This cookbook provides common functionality needed for Chef server,
 Push jobs, Reporting, and other enterprise-grade Omnibus projects.
 
@@ -86,6 +88,7 @@ All files in the repository are licensed under the Apache 2.0 license. If any
 file is missing the License header it should assume the following is attached;
 
 ```
+```text
 Copyright 2013-2015 Chef Software, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
