@@ -13,9 +13,11 @@ Documentation:
   Enabled: false
 Encoding:
   Enabled: false
-Style/FileName:
-  Enabled: false
 LineLength:
+  Enabled: false
+Lint/BlockAlignment:
+  Enabled: false
+Lint/DeprecatedClassMethods:
   Enabled: false
 MethodLength:
   Enabled: false
@@ -25,7 +27,39 @@ PerceivedComplexity:
   Enabled: false
 SingleSpaceBeforeFirstArg:
   Enabled: false
+Style/BracesAroundHashParameters:
+  Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
+Style/DoubleNegation:
+  Enabled: false
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
 Style/FileName:
+  Enabled: false
+Style/FirstParameterIndentation:
+  Enabled: false
+Style/HashSyntax:
+  Enabled: false
+Style/IndentationConsistency:
+  Enabled: false
+Style/IndentHash:
+  Enabled: false
+Style/PercentLiteralDelimiters:
+  Enabled: false
+Style/PredicateName:
+  Enabled: false
+Style/RegexpLiteral:
+  Enabled: false
+Style/SpaceInsideBlockBraces:
+  Enabled: false
+Style/SpaceInsideParens:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/TrailingBlankLines:
+  Enabled: false
+Style/TrailingComma:
   Enabled: false
