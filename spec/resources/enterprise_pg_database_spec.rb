@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "enterprise_test::enterprise_pg_database" do
-  let(:database) { "testdb" }
+describe 'enterprise_test::enterprise_pg_database' do
+  let(:database) { 'testdb' }
   let(:encoding) { nil }
   let(:host) { nil }
   let(:owner) { nil }
@@ -10,8 +10,8 @@ describe "enterprise_test::enterprise_pg_database" do
   let(:username) { nil }
 
   let(:runner) do
-    ChefSpec::SoloRunner.new :step_into => ["enterprise_pg_database"] do |node|
-      node.default['testproject']['postgresql']['username'] = "testuser"
+    ChefSpec::SoloRunner.new step_into: ['enterprise_pg_database'] do |node|
+      node.default['testproject']['postgresql']['username'] = 'testuser'
       node.default['test']['database'] = database
       node.default['test']['encoding'] = encoding
       node.default['test']['host'] = host
@@ -23,20 +23,20 @@ describe "enterprise_test::enterprise_pg_database" do
   end
   subject(:chef_run) { runner.converge(described_recipe) }
 
-  it "creates a database" do
-    expect(chef_run).to run_execute("create_database_testdb")
+  it 'creates a database' do
+    expect(chef_run).to run_execute('create_database_testdb')
   end
 
-  context "when a username, host, and password are present" do
-    let(:username) { "testdbuser" }
-    let(:password) { "testpass" }
-    let(:host) { "testhost"  }
+  context 'when a username, host, and password are present' do
+    let(:username) { 'testdbuser' }
+    let(:password) { 'testpass' }
+    let(:host) { 'testhost' }
 
-    it "uses the username, host, and password" do
-      expect(chef_run).to run_execute("create_database_testdb").with(
-        :command => "createdb --template template0 --encoding UTF-8 testdb",
-        :user => "testuser",
-        :retries => 30,
+    it 'uses the username, host, and password' do
+      expect(chef_run).to run_execute('create_database_testdb').with(
+        command: 'createdb --template template0 --encoding UTF-8 testdb',
+        user: 'testuser',
+        retries: 30
       )
     end
   end
