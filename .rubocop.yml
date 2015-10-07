@@ -37,6 +37,8 @@ Style/EmptyLinesAroundBlockBody:
   Enabled: false
 Style/EmptyLinesAroundModuleBody:
   Enabled: false
+Style/ExtraSpacing:
+  Enabled: false
 Style/FileName:
   Enabled: false
 Style/FirstParameterIndentation:
