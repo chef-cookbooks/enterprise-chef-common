@@ -1,5 +1,19 @@
 # Enterprise Cookbook Change Log
 
+## 0.9.0 (2015-10-08)
+
+* Relax RuboCop rules
+* Ensure `component_runit_supervisor` `:delete` action does not attempt to run a
+  command that does not exist
+* Add basic ChefSpec convergence coverage
+* Update Travis configuration to run using ChefDK
+
+## 0.8.0 (2015-06-09)
+
+* Add Gemfile
+* Fix for empty resource definitions overwriting environment variables
+* Update Postgres credentials to utilize environment variables
+
 ## 0.7.1 (2015-06-05)
 
 * Fix bug with undefined variable in pg\_user and pg\_database resources
