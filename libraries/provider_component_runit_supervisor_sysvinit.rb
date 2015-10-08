@@ -26,6 +26,7 @@ class Chef
           Dir["#{new_resource.install_path}/service/*"].each do |svc|
             execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}" do
               retries 5
+              only_if { ::File.exist? "#{new_resource.install_path}/embedded/bin/sv" }
             end
           end
 
