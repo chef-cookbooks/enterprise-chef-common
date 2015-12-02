@@ -10,7 +10,7 @@ class Chef
 
         use_inline_resources
 
-        def action_create
+        action :create do
           template "/usr/lib/systemd/system/#{unit_name}" do
             cookbook "enterprise"
             owner "root"
@@ -29,7 +29,7 @@ class Chef
           end
         end
 
-        def action_delete
+        action :delete do
           Dir["#{new_resource.install_path}/service/*"].each do |svc|
             execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}" do
               retries 5

@@ -12,7 +12,7 @@ class Chef
 
         use_inline_resources
 
-        def action_create
+        action :create do
           # Ensure the previous named iteration of the system job is nuked
           execute "initctl stop opscode-runsvdir" do
             only_if "initctl status opscode-runsvdir | grep start"
@@ -49,7 +49,7 @@ class Chef
           end
         end
 
-        def action_delete
+        action :delete do
           service "#{project_name}-runsvdir" do
             provider Chef::Provider::Service::Upstart
             action [:stop, :disable]
