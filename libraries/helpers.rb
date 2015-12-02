@@ -49,7 +49,7 @@ module EnterpriseChef
       when 'tier'
         role == 'backend'
       when 'ha'
-        if (role == 'backend')
+        if role == 'backend'
           dir = node[project_name]['keepalived']['dir']
           cluster_status_file = "#{dir}/current_cluster_status"
 
