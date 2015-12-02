@@ -11,7 +11,7 @@ class Chef
 
         use_inline_resources
 
-        def action_create
+        action :create do
           execute "echo '#{svdir_line}' >> /etc/inittab" do
             not_if "grep '#{svdir_line}' /etc/inittab"
             notifies :run, "execute[init q]", :immediately
@@ -22,7 +22,7 @@ class Chef
           end
         end
 
-        def action_delete
+        action :delete do
           Dir["#{new_resource.install_path}/service/*"].each do |svc|
             execute "#{new_resource.install_path}/embedded/bin/sv stop #{svc}" do
               retries 5
