@@ -1,6 +1,8 @@
 enterprise cookbook
 ===================
 
+[![Join the chat at https://gitter.im/chef-cookbooks/enterprise-chef-common](https://badges.gitter.im/chef-cookbooks/enterprise-chef-common.svg)](https://gitter.im/chef-cookbooks/enterprise-chef-common?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/chef-cookbooks/enterprise-chef-common.svg?branch=master)](http://travis-ci.org/chef-cookbooks/enterprise-chef-common)
 
 This cookbook provides common functionality needed for Chef server,
