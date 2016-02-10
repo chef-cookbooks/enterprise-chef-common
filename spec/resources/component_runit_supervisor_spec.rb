@@ -396,7 +396,6 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
         it_behaves_like 'systemd delete'
       end
 
-
       context 'when on Ubuntu' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'ubuntu', version: '12.04',
