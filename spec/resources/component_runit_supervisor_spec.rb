@@ -277,6 +277,25 @@ describe 'enterprise_test::component_runit_supervisor_create' do
         it_behaves_like 'systemd create'
       end
 
+      context 'when on SuSE 11' do
+        let(:runner) do
+          ChefSpec::SoloRunner.new platform: 'suse', version: '11.3',
+                                   step_into: ['component_runit_supervisor']
+        end
+
+        it_behaves_like 'sysvinit create'
+      end
+
+      context 'when on SuSE 12 with systemd' do
+        let(:runner) do
+          ChefSpec::SoloRunner.new platform: 'suse', version: '12.0', step_into: ['component_runit_supervisor'] do |node|
+            node.default['init_package'] = 'systemd'
+          end
+        end
+
+        it_behaves_like 'systemd create'
+      end
+
       context 'when on Ubuntu' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'ubuntu', version: '12.04',
@@ -357,6 +376,26 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
 
         it_behaves_like 'systemd delete'
       end
+
+      context 'when on SuSE 11' do
+        let(:runner) do
+          ChefSpec::SoloRunner.new platform: 'suse', version: '11.3',
+                                   step_into: ['component_runit_supervisor']
+        end
+
+        it_behaves_like 'sysvinit delete'
+      end
+
+      context 'when on SuSE 12 with systemd' do
+        let(:runner) do
+          ChefSpec::SoloRunner.new platform: 'suse', version: '12.0', step_into: ['component_runit_supervisor'] do |node|
+            node.default['init_package'] = 'systemd'
+          end
+        end
+
+        it_behaves_like 'systemd delete'
+      end
+
 
       context 'when on Ubuntu' do
         let(:runner) do
