@@ -25,7 +25,7 @@ Metrics/AbcSize:
   Enabled: false
 PerceivedComplexity:
   Enabled: false
-SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 Style/BracesAroundHashParameters:
   Enabled: false
@@ -63,5 +63,7 @@ Style/StringLiterals:
   Enabled: false
 Style/TrailingBlankLines:
   Enabled: false
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
+  Enabled: false
+Style/TrailingCommaInArguments:
   Enabled: false

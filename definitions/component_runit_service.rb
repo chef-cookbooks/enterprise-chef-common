@@ -46,7 +46,7 @@ define :component_runit_service, :package => 'private_chef',
     end
   end
 
-  if params[:action] == :down
+  if params[:action] == :down # ignore ~FC023 - this is a definition
     log "stop runit_service[#{component}]" do
       notifies :down, "runit_service[#{component}]", :immediately
     end
