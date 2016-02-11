@@ -7,9 +7,11 @@ class Chef
         provides :component_runit_supervisor, :platform_family => "rhel" do |node|
           node['platform_version'].to_i == 6
         end
+        provides :component_runit_supervisor, :platform => "fedora" do |node|
+          node['platform_version'].to_i <= 14
+        end
         provides :component_runit_supervisor,
-          :platform => %w[ amazon fedora ubuntu ]
-
+          :platform => %w[ amazon ubuntu ]
         use_inline_resources
 
         action :create do
