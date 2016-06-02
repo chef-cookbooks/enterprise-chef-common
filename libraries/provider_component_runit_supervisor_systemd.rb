@@ -11,7 +11,7 @@ class Chef
         use_inline_resources
 
         action :create do
-          template "/usr/lib/systemd/system/#{unit_name}" do
+          template "/etc/systemd/system/#{unit_name}" do
             cookbook "enterprise"
             owner "root"
             group "root"
@@ -42,7 +42,7 @@ class Chef
             provider Chef::Provider::Service::Systemd
           end
 
-          file "/usr/lib/systemd/system/#{unit_name}" do
+          file "/etc/systemd/system/#{unit_name}" do
             action :delete
           end
         end
