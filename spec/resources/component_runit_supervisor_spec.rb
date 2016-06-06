@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.shared_examples 'systemd create' do
   it 'renders the unit template' do
     expect(chef_run).to create_template(
-      "/usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service"
+      "/etc/systemd/system/#{enterprise_name}-runsvdir-start.service"
     ).with(
       owner: 'root',
       group: 'root',
@@ -141,7 +141,7 @@ RSpec.shared_examples 'systemd delete' do
 
   it 'deletes the unit file' do
     expect(chef_run).to delete_file(
-      "/usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service"
+      "/etc/systemd/system/#{enterprise_name}-runsvdir-start.service"
     )
   end
 end
