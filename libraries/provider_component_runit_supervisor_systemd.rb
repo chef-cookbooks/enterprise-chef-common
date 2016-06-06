@@ -23,6 +23,15 @@ class Chef
             source "runsvdir-start.service.erb"
           end
 
+          # This cookbook originally installed its unit files in /usr/lib/systemd/system.
+          execute "cleanup_old_unit_files" do
+            command <<-EOH
+              rm /usr/lib/systemd/system/#{unit_name}
+              systemctl daemon-reload
+            EOH
+            only_if { ::File.exist?("/usr/lib/systemd/system/#{unit_name}") }
+          end
+
           service unit_name do
             action [:enable, :start]
             provider Chef::Provider::Service::Systemd
