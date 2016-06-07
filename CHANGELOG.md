@@ -1,5 +1,18 @@
 # Enterprise Cookbook Change Log
 
+## 0.10.2 (2016-08-10)
+
+* Add directive to systemd file to wait for network to be up to avoid process (elasticsearch) coming up thinking there is no network configured.
+
+## 0.10.1 (2016-06-07)
+
+* Put systemd unit files in /etc/systemd/system; clean up files previously placed
+  in /usr/lib/systemd/system.
+
+## 0.10.0 (2016-02-11)
+
+* SUSE support.
+
 ## 0.9.0 (2015-10-08)
 
 * Relax RuboCop rules
