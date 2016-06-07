@@ -16,6 +16,15 @@ RSpec.shared_examples 'systemd create' do
     )
   end
 
+  # TODO:  Get this working with the guard.
+  it 'removes unit files previously created in /usr/lib/systemd/system' do
+    allow(::File).to receive(:exist?).and_call_original
+    allow(::File).to receive(:exist?).with("/usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service").and_return true
+    expect(chef_run).to run_execute("cleanup_old_unit_files").with(
+      command: "              rm /usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service\n              systemctl daemon-reload\n"
+    )
+  end
+
   it 'enables the service' do
     expect(chef_run).to enable_service("#{enterprise_name}-runsvdir-start.service").with(
       provider: Chef::Provider::Service::Systemd
