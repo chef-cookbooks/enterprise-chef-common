@@ -4,7 +4,7 @@ maintainer_email  'cookbooks@chef.io'
 license           'Apache 2.0'
 description       'Installs common libraries and resources for Chef server and add-ons'
 long_description   IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           '0.10.1'
+version           '0.10.2'
 
 depends          'runit', '> 1.0.0'
 

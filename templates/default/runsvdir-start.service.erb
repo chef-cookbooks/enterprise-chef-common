@@ -1,5 +1,6 @@
 [Unit]
 Description=<%= @project_name %> Runit Process Supervisor
+After=network.target auditd.service
 
 [Service]
 ExecStart=<%= @install_path %>/embedded/bin/runsvdir-start
