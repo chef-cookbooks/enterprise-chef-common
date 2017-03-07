@@ -6,7 +6,7 @@ description       'Installs common libraries and resources for Chef server and a
 long_description   IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           '0.10.2'
 
-depends          'runit', '> 1.0.0'
+depends          'runit', '> 1.6.0'
 
 source_url 'https://github.com/chef-cookbooks/enterprise' if respond_to?(:source_url)
 issues_url 'https://github.com/chef-cookbooks/enterprise/issues' if respond_to?(:issues_url)
