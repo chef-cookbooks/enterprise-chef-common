@@ -1,30 +1,28 @@
-require "chef/provider/lwrp_base"
+require 'chef/provider/lwrp_base'
 
 class Chef
   class Provider
     class ComponentRunitSupervisor
       class Systemd < Chef::Provider::LWRPBase
         provides :component_runit_supervisor do |node|
-          node['init_package'] == "systemd"
+          node['init_package'] == 'systemd'
         end
 
         use_inline_resources
 
         action :create do
           template "/etc/systemd/system/#{unit_name}" do
-            cookbook "enterprise"
-            owner "root"
-            group "root"
-            mode "0644"
-            variables({
-              :install_path => new_resource.install_path,
-              :project_name => new_resource.name,
-            })
-            source "runsvdir-start.service.erb"
+            cookbook 'enterprise'
+            owner 'root'
+            group 'root'
+            mode '0644'
+            variables(install_path: new_resource.install_path,
+                      project_name: new_resource.name)
+            source 'runsvdir-start.service.erb'
           end
 
           # This cookbook originally installed its unit files in /usr/lib/systemd/system.
-          execute "cleanup_old_unit_files" do
+          execute 'cleanup_old_unit_files' do
             command <<-EOH
               rm /usr/lib/systemd/system/#{unit_name}
               systemctl daemon-reload

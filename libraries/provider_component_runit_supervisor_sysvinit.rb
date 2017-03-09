@@ -1,14 +1,14 @@
-require "chef/provider/lwrp_base"
+require 'chef/provider/lwrp_base'
 
 class Chef
   class Provider
     class ComponentRunitSupervisor
       class Sysvinit < Chef::Provider::LWRPBase
-        provides :component_runit_supervisor, :platform_family => "suse" do |node|
+        provides :component_runit_supervisor, platform_family: 'suse' do |node|
           node['platform_version'].to_i == 11
         end
-        provides :component_runit_supervisor, :platform => "debian"
-        provides :component_runit_supervisor, :platform_family => "rhel" do |node|
+        provides :component_runit_supervisor, platform: 'debian'
+        provides :component_runit_supervisor, platform_family: 'rhel' do |node|
           node['platform_version'].to_i == 5
         end
 
@@ -17,10 +17,10 @@ class Chef
         action :create do
           execute "echo '#{svdir_line}' >> /etc/inittab" do
             not_if "grep '#{svdir_line}' /etc/inittab"
-            notifies :run, "execute[init q]", :immediately
+            notifies :run, 'execute[init q]', :immediately
           end
 
-          execute "init q" do
+          execute 'init q' do
             action :nothing
           end
         end
@@ -33,25 +33,25 @@ class Chef
             end
           end
 
-          ruby_block "remove inittab entry" do
+          ruby_block 'remove inittab entry' do
             block do
-              f = Chef::Util::FileEdit.new "/etc/inittab"
+              f = Chef::Util::FileEdit.new '/etc/inittab'
               f.search_file_delete svdir_line
               f.write_file
             end
             only_if "grep '#{svdir_line}' /etc/inittab"
-            notifies :run, "execute[init q]", :immediately
-            notifies :run, "execute[pkill -HUP -P 1 runsv$]", :immediately
+            notifies :run, 'execute[init q]', :immediately
+            notifies :run, 'execute[pkill -HUP -P 1 runsv$]', :immediately
           end
 
-          execute "init q" do
+          execute 'init q' do
             action :nothing
           end
 
           # To avoid stomping on runsv's owned by a different runsvdir
           # process, kill any runsv process that has been orphaned, and is
           # now owned by init (process 1).
-          execute "pkill -HUP -P 1 runsv$" do
+          execute 'pkill -HUP -P 1 runsv$' do
             action :nothing
           end
         end

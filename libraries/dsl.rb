@@ -1,7 +1,6 @@
 require_relative 'helpers'
 
 module EnterpriseChef
-
   # Allows us to use various helper methods directly in recipes,
   # resources, and providers without a lot of ceremony.
   #
@@ -18,13 +17,11 @@ module EnterpriseChef
   #   end
   #
   module DSL
-
     EnterpriseChef::Helpers.singleton_class.instance_methods(false).each do |name|
       define_method(name) do
         EnterpriseChef::Helpers.send(name, node)
       end
     end
-
   end
 end
 

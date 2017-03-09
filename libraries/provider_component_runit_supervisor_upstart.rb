@@ -1,40 +1,38 @@
-require "chef/provider/lwrp_base"
+require 'chef/provider/lwrp_base'
 
 class Chef
   class Provider
     class ComponentRunitSupervisor
       class Upstart < Chef::Provider::LWRPBase
-        provides :component_runit_supervisor, :platform_family => "rhel" do |node|
+        provides :component_runit_supervisor, platform_family: 'rhel' do |node|
           node['platform_version'].to_i == 6
         end
-        provides :component_runit_supervisor, :platform => "fedora" do |node|
+        provides :component_runit_supervisor, platform: 'fedora' do |node|
           node['platform_version'].to_i <= 14
         end
         provides :component_runit_supervisor,
-          :platform => %w[ amazon ubuntu ]
+          platform: %w( amazon ubuntu )
         use_inline_resources
 
         action :create do
           # Ensure the previous named iteration of the system job is nuked
-          execute "initctl stop opscode-runsvdir" do
-            only_if "initctl status opscode-runsvdir | grep start"
+          execute 'initctl stop opscode-runsvdir' do
+            only_if 'initctl status opscode-runsvdir | grep start'
             retries 30
           end
 
-          file "/etc/init/opscode-runsvdir.conf" do
+          file '/etc/init/opscode-runsvdir.conf' do
             action :delete
           end
 
           template "/etc/init/#{project_name}-runsvdir.conf" do
-            cookbook "enterprise"
-            owner "root"
-            group "root"
-            mode "0644"
-            variables({
-              :install_path => new_resource.install_path,
-              :ctl_name => ctl_name,
-            })
-            source "init-runsvdir.erb"
+            cookbook 'enterprise'
+            owner 'root'
+            group 'root'
+            mode '0644'
+            variables(install_path: new_resource.install_path,
+                      ctl_name: ctl_name)
+            source 'init-runsvdir.erb'
           end
 
           # Keep on trying till the job is found :(
@@ -68,11 +66,11 @@ class Chef
 
         # We have a special case for "private_chef"
         def ctl_name
-          new_resource.name == "private_chef" ? "private-chef-ctl" : new_resource.ctl_name
+          new_resource.name == 'private_chef' ? 'private-chef-ctl' : new_resource.ctl_name
         end
 
         def project_name
-          new_resource.name == "private_chef" ? "private-chef" : new_resource.name
+          new_resource.name == 'private_chef' ? 'private-chef' : new_resource.name
         end
       end
     end

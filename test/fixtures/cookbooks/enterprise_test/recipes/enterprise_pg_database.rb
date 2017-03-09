@@ -1,4 +1,4 @@
-node.default['enterprise']['name'] = "testproject"
+node.default['enterprise']['name'] = 'testproject'
 
 enterprise_pg_database node['test']['database'] do
   encoding node['test']['encoding']

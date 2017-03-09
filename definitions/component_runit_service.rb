@@ -3,14 +3,14 @@
 # :package defines which part of the node attributes we should look in for configuration
 # as it different for each add-on e.g. :package => 'reporting' or :package => 'pushy'
 #
-define :component_runit_service, :package => 'private_chef',
-                                 :log_directory => nil,
-                                 :svlogd_size => nil,
-                                 :svlogd_num => nil,
-                                 :ha => nil,
-                                 :control => nil,
-                                 :runit_attributes => {},
-                                 :action => :enable do
+define :component_runit_service, package: 'private_chef',
+                                 log_directory: nil,
+                                 svlogd_size: nil,
+                                 svlogd_num: nil,
+                                 ha: nil,
+                                 control: nil,
+                                 runit_attributes: {},
+                                 action: :enable do
   package = params[:package]
   component = params[:name]
   log_directory = params[:log_directory] || node[package][component]['log_directory']
@@ -22,15 +22,15 @@ define :component_runit_service, :package => 'private_chef',
   end
 
   template "#{log_directory}/config" do
-    source "config.svlogd"
-    cookbook "enterprise"
-    mode "0644"
-    owner "root"
-    group "root"
+    source 'config.svlogd'
+    cookbook 'enterprise'
+    mode '0644'
+    owner 'root'
+    group 'root'
     notifies :run, "execute[restart_#{component}_log_service]"
     variables(
-      :svlogd_size => ( params[:svlogd_size] || node[package][component]['log_rotation']['file_maxbytes']),
-      :svlogd_num  => ( params[:svlogd_num] || node[package][component]['log_rotation']['num_to_keep'])
+      svlogd_size: (params[:svlogd_size] || node[package][component]['log_rotation']['file_maxbytes']),
+      svlogd_num: (params[:svlogd_num] || node[package][component]['log_rotation']['num_to_keep'])
     )
   end
 
@@ -39,7 +39,7 @@ define :component_runit_service, :package => 'private_chef',
     retries 20
     control params[:control] if params[:control]
     options(
-      :log_directory => log_directory
+      log_directory: log_directory
     )
     params[:runit_attributes].each do |attr_name, attr_value|
       send(attr_name.to_sym, attr_value)
@@ -73,5 +73,4 @@ define :component_runit_service, :package => 'private_chef',
       action is_keepalive_service ? :create : :delete
     end
   end
-
 end
