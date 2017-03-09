@@ -19,7 +19,7 @@ action :create do
   execute "create_database_#{new_resource.database}" do
     command createdb_command
     user node[project_name]['postgresql']['username']
-    not_if {database_exist?}
+    not_if { database_exist? }
     retries 30
   end
 end
@@ -40,12 +40,12 @@ def database_exist?
   cmd = []
   cmd << 'psql'
   cmd << '--dbname template1 --tuples-only'
-  cmd << %{--command "SELECT datname FROM pg_database WHERE datname='#{new_resource.database}';"}
+  cmd << %(--command "SELECT datname FROM pg_database WHERE datname='#{new_resource.database}';")
   cmd << "| grep #{new_resource.database}"
   cmd = cmd.join(' ')
 
   s = Mixlib::ShellOut.new(cmd,
-                           :user => node[project_name]['postgresql']['username'])
+                           user: node[project_name]['postgresql']['username'])
   s.run_command
   s.exitstatus == 0
 end

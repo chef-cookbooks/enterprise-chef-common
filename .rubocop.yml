@@ -1,69 +1,21 @@
-AllCops:
-  Exclude:
-    - vendor/**/*
-    - Guardfile
-
-AlignParameters:
-  Enabled: false
-ClassLength:
-  Enabled: false
-CyclomaticComplexity:
-  Enabled: false
-Documentation:
-  Enabled: false
-Encoding:
-  Enabled: false
-LineLength:
-  Enabled: false
-Lint/BlockAlignment:
-  Enabled: false
-Lint/DeprecatedClassMethods:
-  Enabled: false
-MethodLength:
-  Enabled: false
-Metrics/AbcSize:
-  Enabled: false
-PerceivedComplexity:
-  Enabled: false
-Style/SpaceBeforeFirstArg:
-  Enabled: false
-Style/BracesAroundHashParameters:
-  Enabled: false
-Style/ClassAndModuleChildren:
-  Enabled: false
 Style/DoubleNegation:
-  Enabled: false
-Style/EmptyLinesAroundBlockBody:
-  Enabled: false
-Style/EmptyLinesAroundModuleBody:
-  Enabled: false
-Style/ExtraSpacing:
-  Enabled: false
-Style/FileName:
-  Enabled: false
-Style/FirstParameterIndentation:
-  Enabled: false
-Style/HashSyntax:
-  Enabled: false
-Style/IndentationConsistency:
-  Enabled: false
-Style/IndentHash:
-  Enabled: false
-Style/PercentLiteralDelimiters:
-  Enabled: false
+  Exclude:
+    - 'libraries/helpers.rb'
+
+# Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
+# NamePrefix: is_, has_, have_
+# NamePrefixBlacklist: is_, has_, have_
+# NameWhitelist: is_a?
 Style/PredicateName:
-  Enabled: false
+  Exclude:
+    - 'spec/**/*'
+    - 'libraries/helpers.rb'
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
+# SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
-  Enabled: false
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-Style/SpaceInsideParens:
-  Enabled: false
-Style/StringLiterals:
-  Enabled: false
-Style/TrailingBlankLines:
-  Enabled: false
-Style/TrailingCommaInLiteral:
-  Enabled: false
-Style/TrailingCommaInArguments:
-  Enabled: false
+  Exclude:
+    - 'test/integration/component_runit_supervisor_create/serverspec/sysvinit_spec.rb'
+    - 'test/integration/component_runit_supervisor_create/serverspec/upstart_spec.rb'
+    - 'test/integration/component_runit_supervisor_delete/serverspec/sysvinit_spec.rb'

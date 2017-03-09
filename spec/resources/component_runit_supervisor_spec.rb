@@ -10,7 +10,7 @@ RSpec.shared_examples 'systemd create' do
       mode: '0644',
       variables: {
         install_path: '/opt/tp',
-        project_name: enterprise_name
+        project_name: enterprise_name,
       },
       source: 'runsvdir-start.service.erb'
     )
@@ -20,7 +20,7 @@ RSpec.shared_examples 'systemd create' do
   it 'removes unit files previously created in /usr/lib/systemd/system' do
     allow(::File).to receive(:exist?).and_call_original
     allow(::File).to receive(:exist?).with("/usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service").and_return true
-    expect(chef_run).to run_execute("cleanup_old_unit_files").with(
+    expect(chef_run).to run_execute('cleanup_old_unit_files').with(
       command: "              rm /usr/lib/systemd/system/#{enterprise_name}-runsvdir-start.service\n              systemctl daemon-reload\n"
     )
   end
@@ -84,7 +84,7 @@ RSpec.shared_examples 'upstart create' do
       source: 'init-runsvdir.erb',
       variables: {
         install_path: '/opt/tp',
-        ctl_name: 'testproject-ctl'
+        ctl_name: 'testproject-ctl',
       }
     )
   end
@@ -116,7 +116,7 @@ RSpec.shared_examples 'upstart create' do
         source: 'init-runsvdir.erb',
         variables: {
           install_path: '/opt/tp',
-          ctl_name: 'private-chef-ctl'
+          ctl_name: 'private-chef-ctl',
         }
       )
     end

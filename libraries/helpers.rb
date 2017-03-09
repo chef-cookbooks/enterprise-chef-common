@@ -1,6 +1,5 @@
 module EnterpriseChef
   module Helpers
-
     # Determine if this machine should be considered the bootstrap
     # server, based on topology, role, and explicit bootstrap
     # designation.
@@ -53,7 +52,7 @@ module EnterpriseChef
           dir = node[project_name]['keepalived']['dir']
           cluster_status_file = "#{dir}/current_cluster_status"
 
-          if File.exists?(cluster_status_file)
+          if File.exist?(cluster_status_file)
             File.open(cluster_status_file).read.chomp == 'master'
           else
             # If the file doesn't exist, then we are most likely doing
@@ -124,6 +123,5 @@ module EnterpriseChef
       project_name = node['enterprise']['name']
       standalone?(node) || node[project_name]['role'] == 'frontend'
     end
-
   end
 end
