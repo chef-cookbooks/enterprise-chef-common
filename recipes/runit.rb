@@ -18,12 +18,12 @@ project_name = node['enterprise']['name']
 node.default_unless[node['enterprise']['name']] = {} # ~FC047 (See https://github.com/acrmp/foodcritic/issues/225)
 install_path = node[project_name]['install_path']
 
-node.set['runit']['sv_bin']       = "#{install_path}/embedded/bin/sv"
-node.set['runit']['svlogd_bin']   = "#{install_path}/embedded/bin/svlogd"
-node.set['runit']['chpst_bin']    = "#{install_path}/embedded/bin/chpst"
-node.set['runit']['service_dir']  = "#{install_path}/service"
-node.set['runit']['sv_dir']       = "#{install_path}/sv"
-node.set['runit']['lsb_init_dir'] = "#{install_path}/init"
+node.override['runit']['sv_bin']       = "#{install_path}/embedded/bin/sv"
+node.override['runit']['svlogd_bin']   = "#{install_path}/embedded/bin/svlogd"
+node.override['runit']['chpst_bin']    = "#{install_path}/embedded/bin/chpst"
+node.override['runit']['service_dir']  = "#{install_path}/service"
+node.override['runit']['sv_dir']       = "#{install_path}/sv"
+node.override['runit']['lsb_init_dir'] = "#{install_path}/init"
 
 component_runit_supervisor node['enterprise']['name'] do
   ctl_name node[node['enterprise']['name']]['ctl_name'] ||
