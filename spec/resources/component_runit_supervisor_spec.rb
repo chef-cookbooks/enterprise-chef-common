@@ -219,7 +219,7 @@ end
 
 describe 'enterprise_test::component_runit_supervisor_create' do
   let(:runner) do
-    ChefSpec::SoloRunner.new step_into: ['component_runit_supervisor']
+    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04', step_into: ['component_runit_supervisor'])
   end
   subject(:chef_run) { runner.converge(described_recipe) }
   let(:enterprise_name) { 'testproject' }
@@ -251,7 +251,7 @@ describe 'enterprise_test::component_runit_supervisor_create' do
 
       context 'when on Fedora' do
         let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'fedora', version: '20', step_into: ['component_runit_supervisor'] do |node|
+          ChefSpec::SoloRunner.new platform: 'fedora', version: '21', step_into: ['component_runit_supervisor'] do |node|
             node.default['init_package'] = 'systemd'
           end
         end
@@ -352,7 +352,7 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
 
       context 'when on Fedora' do
         let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'fedora', version: '20', step_into: ['component_runit_supervisor'] do |node|
+          ChefSpec::SoloRunner.new platform: 'fedora', version: '21', step_into: ['component_runit_supervisor'] do |node|
             node.default['init_package'] = 'systemd'
           end
         end

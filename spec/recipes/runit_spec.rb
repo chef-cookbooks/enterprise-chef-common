@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'enterprise::runit' do
   subject(:chef_run) do
-    ChefSpec::SoloRunner.new do |node|
+    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04') do |node|
       node.set['enterprise']['name'] = 'testproject'
       node.set['testproject']['install_path'] = '/opt/testproject'
       node.set['testproject']['sysvinit_id'] = 'TP'

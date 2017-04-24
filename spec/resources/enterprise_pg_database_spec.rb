@@ -10,7 +10,7 @@ describe 'enterprise_test::enterprise_pg_database' do
   let(:username) { nil }
 
   let(:runner) do
-    ChefSpec::SoloRunner.new step_into: ['enterprise_pg_database'] do |node|
+    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04', step_into: ['enterprise_pg_database']) do |node|
       node.default['testproject']['postgresql']['username'] = 'testuser'
       node.default['test']['database'] = database
       node.default['test']['encoding'] = encoding
