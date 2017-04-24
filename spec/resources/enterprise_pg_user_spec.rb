@@ -8,7 +8,7 @@ describe 'enterprise_test::enterprise_pg_user' do
   let(:superuser) { nil }
 
   let(:runner) do
-    ChefSpec::SoloRunner.new step_into: ['enterprise_pg_user'] do |node|
+    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04', step_into: ['enterprise_pg_user']) do |node|
       node.default['testproject']['postgresql']['username'] = 'testuser'
       node.default['test']['admin_password'] = admin_password
       node.default['test']['admin_username'] = admin_username
