@@ -8,8 +8,8 @@ version '0.10.3'
 
 depends 'runit', '> 1.6.0'
 
-source_url 'https://github.com/chef-cookbooks/enterprise' if respond_to?(:source_url)
-issues_url 'https://github.com/chef-cookbooks/enterprise/issues' if respond_to?(:issues_url)
+source_url 'https://github.com/chef-cookbooks/enterprise'
+issues_url 'https://github.com/chef-cookbooks/enterprise/issues'
 
 chef_version '>= 12.5.1'
 
