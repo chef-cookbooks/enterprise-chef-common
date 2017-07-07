@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe 'enterprise_test::enterprise_pg_database' do
   let(:database) { 'testdb' }
-  let(:encoding) { nil }
+  let(:encoding) { 'UTF-8' }
   let(:host) { nil }
   let(:owner) { nil }
   let(:password) { nil }
-  let(:template) { nil }
+  let(:template) { 'template0' }
   let(:username) { nil }
 
   let(:runner) do
