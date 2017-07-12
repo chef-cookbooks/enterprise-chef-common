@@ -1,5 +1,14 @@
 # Enterprise Cookbook Change Log
 
+This file is used to list changes made in each version of the enterprise cookbook.
+
+## 0.11.0 (2017-07-12)
+
+- Convert the library LWRPs to custom resources
+- [CLOUD-429] Fix runsvdir reboot issues with Upstart
+- Update enterprise_pg_database and specs to be chef 13.x compatible
+- Avoid deprecation warnings in chefspec
+
 ## 0.10.2 (2016-08-10)
 
 * Add directive to systemd file to wait for network to be up to avoid process (elasticsearch) coming up thinking there is no network configured.
