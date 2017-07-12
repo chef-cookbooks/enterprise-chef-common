@@ -25,8 +25,7 @@ action :create do
     owner 'root'
     group 'root'
     mode '0644'
-    variables(install_path: new_resource.install_path,
-              ctl_name: ctl_name)
+    variables install_path: new_resource.install_path
     source 'init-runsvdir.erb'
   end
 

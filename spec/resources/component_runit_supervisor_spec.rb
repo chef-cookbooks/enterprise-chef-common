@@ -84,7 +84,6 @@ RSpec.shared_examples 'upstart create' do
       source: 'init-runsvdir.erb',
       variables: {
         install_path: '/opt/tp',
-        ctl_name: 'testproject-ctl',
       }
     )
   end
@@ -116,7 +115,6 @@ RSpec.shared_examples 'upstart create' do
         source: 'init-runsvdir.erb',
         variables: {
           install_path: '/opt/tp',
-          ctl_name: 'private-chef-ctl',
         }
       )
     end
