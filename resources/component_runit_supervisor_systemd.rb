@@ -13,15 +13,17 @@ action :create do
     variables(install_path: new_resource.install_path,
               project_name: new_resource.name)
     source 'runsvdir-start.service.erb'
+    notifies :run, 'execute[systemctl daemon-reload]', :immediately
+  end
+
+  execute 'systemctl daemon-reload' do
+    action :nothing
   end
 
   # This cookbook originally installed its unit files in /usr/lib/systemd/system.
-  execute 'cleanup_old_unit_files' do
-    command <<-EOH
-              rm /usr/lib/systemd/system/#{unit_name}
-              systemctl daemon-reload
-    EOH
-    only_if { ::File.exist?("/usr/lib/systemd/system/#{unit_name}") }
+  file "/usr/lib/systemd/system/#{unit_name}" do
+    action :delete
+    notifies :run, 'execute[systemctl daemon-reload]', :immediately
   end
 
   service unit_name do
@@ -38,6 +40,10 @@ action :delete do
     end
   end
 
+  execute 'systemctl daemon-reload' do
+    action :nothing
+  end
+
   service unit_name do
     action [:stop, :disable]
     provider Chef::Provider::Service::Systemd
@@ -45,6 +51,7 @@ action :delete do
 
   file "/etc/systemd/system/#{unit_name}" do
     action :delete
+    notifies :run, 'execute[systemctl daemon-reload]', :immediately
   end
 end
 
