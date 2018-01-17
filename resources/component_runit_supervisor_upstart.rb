@@ -7,7 +7,7 @@ provides :component_runit_supervisor, platform: 'fedora' do |node|
   node['platform_version'].to_i <= 14
 end
 provides :component_runit_supervisor,
-  platform: %w( amazon ubuntu )
+         platform: %w(amazon ubuntu)
 
 action :create do
   # Ensure the previous named iteration of the system job is nuked
