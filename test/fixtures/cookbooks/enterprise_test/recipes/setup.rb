@@ -33,7 +33,7 @@ end
 
 # Symlink the runit binaries we need into our directory. In real life these
 # would have been installed in the directory above
-%w( runsv runsvdir sv ).each do |bin|
+%w(runsv runsvdir sv).each do |bin|
   link "/opt/tp/embedded/bin/#{bin}" do
     to "#{File.dirname(node['runit']['sv_bin'])}/#{bin}"
   end
