@@ -1,19 +1,8 @@
-Style/DoubleNegation:
-  Exclude:
-    - 'libraries/helpers.rb'
-
-# Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
-# NamePrefix: is_, has_, have_
-# NamePrefixBlacklist: is_, has_, have_
-# NameWhitelist: is_a?
 Style/PredicateName:
   Exclude:
     - 'spec/**/*'
     - 'libraries/helpers.rb'
 
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
   Exclude:
     - 'test/integration/component_runit_supervisor_create/serverspec/sysvinit_spec.rb'
