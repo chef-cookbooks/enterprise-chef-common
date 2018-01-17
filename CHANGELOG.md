@@ -2,6 +2,15 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 0.12.0 (2018-01-17)
+
+- Reload the systemd unit files anytime we make changes
+- Convert pg LWRPs to custom resources
+- Increase the minimum supported chef-client to 12.7
+- Move templates out of the default directory since only Chef 11 requires that
+- Minor cleanup to the test recipe and configs
+- Convert broken ServerSpec tests to InSpec
+
 ## 0.11.0 (2017-07-12)
 
 - Convert the library LWRPs to custom resources
