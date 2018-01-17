@@ -5,6 +5,6 @@ Style/PredicateName:
 
 Style/RegexpLiteral:
   Exclude:
-    - 'test/integration/component_runit_supervisor_create/serverspec/sysvinit_spec.rb'
-    - 'test/integration/component_runit_supervisor_create/serverspec/upstart_spec.rb'
-    - 'test/integration/component_runit_supervisor_delete/serverspec/sysvinit_spec.rb'
+    - 'test/integration/component_runit_supervisor_create/inspec/sysvinit_spec.rb'
+    - 'test/integration/component_runit_supervisor_create/inspec/upstart_spec.rb'
+    - 'test/integration/component_runit_supervisor_delete/inspec/sysvinit_spec.rb'
