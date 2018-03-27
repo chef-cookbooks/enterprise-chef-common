@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 0.13.0 (2018-03-27)
+
+- Resolve Chef 14 deprecation warnings
+
 ## 0.12.0 (2018-01-17)
 
 - Reload the systemd unit files anytime we make changes
