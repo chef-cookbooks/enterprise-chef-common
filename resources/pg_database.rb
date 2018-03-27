@@ -12,14 +12,13 @@ property :host, String
 # the user to run the database-creation psql command
 
 action :create do
-  parent = self
   project_name = node['enterprise']['name']
 
-  ENV['PGHOST'] = parent.host if parent.host
-  ENV['PGUSER'] = parent.username if parent.username
-  ENV['PGPASSWORD'] = parent.password if parent.password
+  ENV['PGHOST'] = new_resource.host if new_resource.host
+  ENV['PGUSER'] = new_resource.username if new_resource.username
+  ENV['PGPASSWORD'] = new_resource.password if new_resource.password
 
-  execute "create_database_#{parent.database}" do
+  execute "create_database_#{new_resource.database}" do
     command createdb_command
     user node[project_name]['postgresql']['username']
     not_if { database_exist? }
@@ -31,10 +30,10 @@ action_class do
   def createdb_command
     [].tap do |cmd|
       cmd << 'createdb'
-      cmd << "--template #{template}"
-      cmd << "--encoding #{encoding}"
-      cmd << "--owner #{owner}" if owner
-      cmd << database
+      cmd << "--template #{new_resource.template}"
+      cmd << "--encoding #{new_resource.encoding}"
+      cmd << "--owner #{new_resource.owner}" if new_resource.owner
+      cmd << new_resource.database
     end.join(' ')
   end
 
@@ -44,8 +43,8 @@ action_class do
     cmd = []
     cmd << 'psql'
     cmd << '--dbname template1 --tuples-only'
-    cmd << %(--command "SELECT datname FROM pg_database WHERE datname='#{database}';")
-    cmd << "| grep #{database}"
+    cmd << %(--command "SELECT datname FROM pg_database WHERE datname='#{new_resource.database}';")
+    cmd << "| grep #{new_resource.database}"
     cmd = cmd.join(' ')
 
     s = Mixlib::ShellOut.new(cmd,
