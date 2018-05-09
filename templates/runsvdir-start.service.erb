@@ -5,6 +5,10 @@ After=network.target auditd.service
 [Service]
 ExecStart=<%= @install_path %>/embedded/bin/runsvdir-start
 Restart=always
+<% if node['packages']['systemd'] && node['packages']['systemd']['version'].to_i >= 228 %>
+# only valid for systemd >= 228
+TasksMax=infinity
+<% end %>
 
 [Install]
 WantedBy=multi-user.target
