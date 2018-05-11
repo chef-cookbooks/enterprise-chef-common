@@ -1,5 +1,6 @@
-if (os[:family] == 'redhat' && os[:release].to_i == 6) ||
-   (os[:family] == 'ubuntu' && os[:release] != '16.04')
+if service('sshd').type == 'upstart' ||
+   # service identifies redhat 6 as sysv, but we install as upstart
+   (os['family'] == 'redhat' && os['release'].to_i == 6)
   describe command('initctl status testproject-runsvdir') do
     its(:stdout) { should match(/start\/running/) }
   end
