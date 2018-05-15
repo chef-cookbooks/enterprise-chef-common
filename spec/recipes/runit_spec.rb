@@ -3,9 +3,9 @@ require 'spec_helper'
 describe 'enterprise::runit' do
   subject(:chef_run) do
     ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04') do |node|
-      node.set['enterprise']['name'] = 'testproject'
-      node.set['testproject']['install_path'] = '/opt/testproject'
-      node.set['testproject']['sysvinit_id'] = 'TP'
+      node.normal['enterprise']['name'] = 'testproject'
+      node.normal['testproject']['install_path'] = '/opt/testproject'
+      node.normal['testproject']['sysvinit_id'] = 'TP'
     end.converge(described_recipe)
   end
 
