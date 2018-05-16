@@ -1,4 +1,4 @@
-if os[:family] == 'redhat' && os[:release].to_i == 7
+if service('sshd').type == 'systemd'
   describe systemd_service('testproject-runsvdir-start.service') do
     it { should_not be_installed }
     it { should_not be_enabled }
