@@ -2,6 +2,14 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 0.14.0 (2018-05-18)
+
+- Make specs Chef 14 friendly
+- Add Ubuntu 18 support
+- Rework specs to use InSpec to detect init system
+- Set systemd TasksMax to infinity where supported
+    This fixes an issue where the JVM ran out of processes.
+
 ## 0.13.0 (2018-03-27)
 
 - Resolve Chef 14 deprecation warnings
