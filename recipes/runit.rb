@@ -25,6 +25,17 @@ node.override['runit']['service_dir']  = "#{install_path}/service"
 node.override['runit']['sv_dir']       = "#{install_path}/sv"
 node.override['runit']['lsb_init_dir'] = "#{install_path}/init"
 
+# The runit cookbook fixed an issue with the sv binary being symlinked to
+# the init.d on directory on Debian/Ubuntu which causes chef-server-ctl to get
+# angry when we attempt to start the service manually. This template preserves
+# the system environment PATH variable rather than hard-coding the value in the
+# init script.
+if platform_family?('debian')
+  r = resources(template: '/opt/opscode/init/rabbitmq')
+  r.cookbook('runit')
+  r.source('rabbitmq-runit-init.d.erb')
+end
+
 component_runit_supervisor node['enterprise']['name'] do
   ctl_name node[node['enterprise']['name']]['ctl_name'] ||
            "#{node['enterprise']['name']}-ctl"
