@@ -30,13 +30,11 @@ Optional attributes are:
 
 Sets the proper attributes to use runit and creates a runit supervisor to be used by component runit services.
 
-## Definitions
+## Resources
 
 ### component_runit_service
 
 Defines a runit service.
-
-## Resources
 
 ### component_runit_supervisor
 

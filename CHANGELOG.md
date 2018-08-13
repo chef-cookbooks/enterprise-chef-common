@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 0.15.0 (2018-08-13)
+
+- Convert component_runit_service definition into a custom resource.
+
 ## 0.14.0 (2018-05-18)
 
 - Make specs Chef 14 friendly
