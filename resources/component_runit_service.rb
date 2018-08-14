@@ -11,7 +11,7 @@ property :svlogd_size, Integer
 property :svlogd_num, Integer
 property :ha, [TrueClass, FalseClass]
 property :control, Array
-property :runit_attributes, Hash
+property :runit_attributes, Hash, default: {}
 
 action :enable do
   package = new_resource.package
@@ -49,6 +49,22 @@ action :enable do
     end
   end
 
+  # The runit cookbook fixed an issue with the sv binary being symlinked to
+  # the init.d on directory on Debian/Ubuntu which causes chef-server-ctl to get
+  # angry when we attempt to start the service manually. This template preserves
+  # the system environment PATH variable rather than hard-coding the value in the
+  # init script.
+  edit_resource!(:template, '/opt/opscode/init/rabbitmq') do
+    source 'sv-rabbitmq-init.erb'
+    cookbook 'private-chef'
+    variables({
+      :name => 'rabbitmq',
+      :sv_bin => '/opt/opscode/embedded/bin/sv',
+      :init_dir => '/opt/opscode/init/'
+    })
+    only_if { platform_family? 'debian' && component == 'rabbitmq' }
+  end
+
   # Keepalive management
   #
   # Our keepalived setup knows which services it must manage by
@@ -77,3 +93,11 @@ action :down do
     notifies :down, "runit_service[#{new_resource.name}]", :immediately
   end
 end
+
+action :restart do
+  runit_service new_resource.name do
+    action :restart
+  end
+end
+
+
