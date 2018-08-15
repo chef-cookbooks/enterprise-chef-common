@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 0.14.1 (2018-08-15)
+
+- Pin runit cookbook to v4.1.1.
+
 ## 0.14.0 (2018-05-18)
 
 - Make specs Chef 14 friendly
