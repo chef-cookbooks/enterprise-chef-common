@@ -212,4 +212,19 @@ describe 'component_runit_service' do
 
     it { is_expected.to stop_runit_service('stopme') }
   end
+
+  context 'delegating some actions to the runit_service resource' do
+    [:start, :restart, :stop, :reload, :disable].each do |action_name|
+      context "action :#{action_name}" do
+        recipe do
+          component_runit_service 'passalong' do
+            package 'awesomeproduct'
+            action action_name
+          end
+        end
+
+        it { is_expected.to send("#{action_name}_runit_service".to_sym, 'passalong') }
+      end
+    end
+  end
 end

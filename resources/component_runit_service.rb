@@ -104,3 +104,11 @@ action :down do
     action :stop
   end
 end
+
+[:start, :restart, :stop, :reload, :disable].each do |action_name|
+  action action_name do
+    runit_service new_resource.component do
+      action action_name
+    end
+  end
+end
