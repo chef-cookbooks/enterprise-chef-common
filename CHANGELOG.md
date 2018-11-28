@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 0.14.2 (2018-11-28)
+
+- turn component_runit_service into a custom resource [\#67]
+
 ## 0.14.1 (2018-08-15)
 
 - Pin runit cookbook to v4.1.1.
