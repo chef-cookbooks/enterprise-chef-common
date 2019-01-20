@@ -54,7 +54,7 @@ RSpec.shared_examples 'sysvinit create' do
     it 'notifies execute[init q]' do
       expect(chef_run.execute(
                "echo 'TP:123456:respawn:/opt/tp/embedded/bin/runsvdir-start' >> /etc/inittab"
-      )).to notify('execute[init q]').to(:run).immediately
+             )).to notify('execute[init q]').to(:run).immediately
     end
   end
 end

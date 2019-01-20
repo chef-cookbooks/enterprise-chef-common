@@ -1,4 +1,4 @@
-Style/PredicateName:
+Naming/PredicateName:
   Exclude:
     - 'spec/**/*'
     - 'libraries/helpers.rb'
