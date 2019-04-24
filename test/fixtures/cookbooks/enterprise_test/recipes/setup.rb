@@ -31,11 +31,20 @@ file '/opt/tp/service/b/run' do
   content "#!/bin/sh\nexec yes n"
 end
 
+# Short term hack until figure out stragegy with new runit
+# Need to figure out how to extract properties from the runit
+runit_bin = case node['platform_family']
+            when 'debian'
+              '/usr/bin/sv'
+            when 'rhel', 'amazon'
+              '/sbin/sv'
+            end
+
 # Symlink the runit binaries we need into our directory. In real life these
 # would have been installed in the directory above
 %w(runsv runsvdir sv).each do |bin|
   link "/opt/tp/embedded/bin/#{bin}" do
-    to "#{File.dirname(node['runit']['sv_bin'])}/#{bin}"
+    to "#{File.dirname(runit_bin)}/#{bin}"
   end
 end
 
