@@ -47,8 +47,9 @@ action :enable do
 
   # runit resources don't support reloading the log service as an action :(
   execute "restart_#{new_resource.component}_log_service" do
-    command "#{node['runit']['sv_bin']} restart #{node['runit']['sv_dir']}/#{new_resource.component}/log"
-    action :nothing
+    runit_service new_resource.component do
+      action :restart
+    end
   end
 
   template "#{log_directory}/config" do
