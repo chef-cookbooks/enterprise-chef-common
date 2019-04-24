@@ -75,28 +75,6 @@ action :enable do
       send(attr_name.to_sym, attr_value)
     end
   end
-
-  # Keepalive management
-  #
-  # Our keepalived setup knows which services it must manage by
-  # looking for a 'keepalive_me' sentinel file in the service's
-  # directory.
-  if EnterpriseChef::Helpers.ha?(node)
-    # We need special handling for the ha param, as it's a boolean and
-    # could be false, so we explicitly check for nil?
-    is_keepalive_service = if new_resource.ha.nil?
-                             node[new_resource.package][new_resource.component]['ha']
-                           else
-                             new_resource.ha
-                           end
-    file "#{node['runit']['sv_dir']}/#{new_resource.component}/keepalive_me" do
-      action is_keepalive_service ? :create : :delete
-    end
-
-    file "#{node['runit']['sv_dir']}/#{new_resource.component}/down" do
-      action is_keepalive_service ? :create : :delete
-    end
-  end
 end
 
 action :down do
