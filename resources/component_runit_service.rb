@@ -77,7 +77,7 @@ action :down do
   end
 end
 
-[:start, :restart, :stop, :reload, :disable].each do |action_name|
+[:start, :restart, :stop, :reload, :disable, :create].each do |action_name|
   action action_name do
     runit_service new_resource.component do
       action action_name
