@@ -51,7 +51,7 @@ action :enable do
     mode '0644'
     owner 'root'
     group 'root'
-    notifies :reload_log, "runit_service[new_resource.component]"
+    notifies :reload_log, "runit_service[#{new_resource.component}]", :delayed
     variables(
       svlogd_size: svlogd_size,
       svlogd_num: svlogd_num
