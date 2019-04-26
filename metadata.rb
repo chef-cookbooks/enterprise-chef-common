@@ -13,6 +13,6 @@ issues_url 'https://github.com/chef-cookbooks/enterprise/issues'
 
 chef_version '>= 12.7' if respond_to?(:chef_version)
 
-%w(redhat oracle centos scientific fedora amazon debian ubuntu).each do |os|
+%w(redhat oracle centos scientific amazon debian ubuntu).each do |os|
   supports os
 end
