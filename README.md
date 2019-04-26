@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/chef-cookbooks/enterprise-chef-common.svg?branch=master)](http://travis-ci.org/chef-cookbooks/enterprise-chef-common)
 
-This cookbook provides common functionality needed for Chef server, Push jobs, Reporting, and other enterprise-grade Omnibus projects.
+This cookbook provides common functionality needed for Chef Server, Push Jobs, Reporting, and other enterprise-grade Omnibus projects.
 
 Your omnibus project attributes should define the following attributes:
 
@@ -30,13 +30,11 @@ Optional attributes are:
 
 Sets the proper attributes to use runit and creates a runit supervisor to be used by component runit services.
 
-## Definitions
+## Resources
 
 ### component_runit_service
 
 Defines a runit service.
-
-## Resources
 
 ### component_runit_supervisor
 
@@ -62,7 +60,7 @@ Creates a runit runsvdir process to monitor component runit processes.
 
 ## Testing
 
-[ChefDK](http://downloads.chef.io/chef-dk/) must be installed
+[ChefDK](https://downloads.chef.io/chefdk) must be installed
 
 ### ChefSpec
 
@@ -70,7 +68,7 @@ Run `chef exec rspec` to run ChefSpec examples.
 
 ### Test Kitchen
 
-Integration tests can be run with [Test Kitchen](http://kitchen.ci/).
+Integration tests can be run with [Test Kitchen](https://kitchen.ci/).
 
 ## Maintainers
 
@@ -78,7 +76,7 @@ This cookbook is maintained by Chef's Community Cookbook Engineering team. Our g
 
 ## License
 
-**Copyright:** 2013-2017, Chef Software, Inc.
+**Copyright:** 2013-2019, Chef Software, Inc.
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
