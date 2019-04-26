@@ -11,7 +11,7 @@ depends 'runit', '= 5.0.1'
 source_url 'https://github.com/chef-cookbooks/enterprise'
 issues_url 'https://github.com/chef-cookbooks/enterprise/issues'
 
-chef_version '>= 12.7' if respond_to?(:chef_version)
+chef_version '>= 13'
 
 %w(redhat oracle centos scientific amazon debian ubuntu).each do |os|
   supports os
