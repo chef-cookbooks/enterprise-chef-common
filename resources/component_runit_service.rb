@@ -45,20 +45,13 @@ action :enable do
   svlogd_size = new_resource.svlogd_size || node[new_resource.package][new_resource.component]['log_rotation']['file_maxbytes']
   svlogd_num = new_resource.svlogd_num || node[new_resource.package][new_resource.component]['log_rotation']['num_to_keep']
 
-  # runit resources don't support reloading the log service as an action :(
-  execute "restart_#{new_resource.component}_log_service" do
-    runit_service new_resource.component do
-      action :restart
-    end
-  end
-
   template "#{log_directory}/config" do
     source 'config.svlogd'
     cookbook 'enterprise'
     mode '0644'
     owner 'root'
     group 'root'
-    notifies :run, "execute[restart_#{new_resource.component}_log_service]"
+    notifies :reload_log, "runit_service[new_resource.component]"
     variables(
       svlogd_size: svlogd_size,
       svlogd_num: svlogd_num
