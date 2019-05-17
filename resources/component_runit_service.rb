@@ -62,6 +62,7 @@ action :enable do
     action :enable
     retries 20
     control new_resource.control if new_resource.control
+    use_init_script_sv_link true
     options(
       log_directory: log_directory
     )
