@@ -22,7 +22,6 @@ Optional attributes are:
 - `node[project_name]['topology']` one of `standalone`, `tier`, or `ha`.
 - `node[project_name]['role']` either `backend` or `frontend`.
 - `node[project_name]['servers'][node_name]['bootstrap']` is used to determine if the node is installation bootstrap server. Value is treated as boolean.
-- `node[project_name]['keepalived']['dir']` directory for keepalived.
 
 ## Recipes
 

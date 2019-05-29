@@ -140,66 +140,6 @@ describe 'component_runit_service' do
         )
       end
     end
-
-    context 'keepalive management in an HA topology' do
-      default_attributes['awesomeproduct']['topology'] = 'ha'
-      default_attributes['awesomeproduct']['haservice']['log_directory'] = '/var/log/awesomeproduct/haservice'
-      default_attributes['awesomeproduct']['haservice']['log_rotation']['num_to_keep'] = 42
-      default_attributes['awesomeproduct']['haservice']['log_rotation']['file_maxbytes'] = 8675309
-
-      recipe do
-        component_runit_service 'haservice' do
-          package 'awesomeproduct'
-        end
-      end
-
-      context 'by default' do
-        it { is_expected.to delete_file('/var/opt/runit/haservice/keepalive_me') }
-        it { is_expected.to delete_file('/var/opt/runit/haservice/down') }
-      end
-
-      context 'when HA is disabled for the component' do
-        context 'via node attributes' do
-          default_attributes['awesomeproduct']['haservice']['ha'] = false
-
-          it { is_expected.to delete_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to delete_file('/var/opt/runit/haservice/down') }
-        end
-
-        context 'via resource parameters' do
-          recipe do
-            component_runit_service 'haservice' do
-              package 'awesomeproduct'
-              ha false
-            end
-          end
-
-          it { is_expected.to delete_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to delete_file('/var/opt/runit/haservice/down') }
-        end
-      end
-
-      context 'when HA is enabled for the component' do
-        context 'via node attributes' do
-          default_attributes['awesomeproduct']['haservice']['ha'] = true
-
-          it { is_expected.to create_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to create_file('/var/opt/runit/haservice/down') }
-        end
-
-        context 'via resource parameters' do
-          recipe do
-            component_runit_service 'haservice' do
-              package 'awesomeproduct'
-              ha true
-            end
-          end
-
-          it { is_expected.to create_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to create_file('/var/opt/runit/haservice/down') }
-        end
-      end
-    end
   end
 
   context 'action :down' do

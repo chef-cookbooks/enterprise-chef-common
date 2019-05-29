@@ -31,7 +31,6 @@ module EnterpriseChef
     #
     #   * A stand-alone EC install
     #   * A tier-topology backend machine
-    #   * An HA topology backend keepalived master machine
     #
     # Any other machine will get `false`.
     #
@@ -47,34 +46,7 @@ module EnterpriseChef
         true # by definition
       when 'tier'
         role == 'backend'
-      when 'ha'
-        if role == 'backend'
-          dir = node[project_name]['keepalived']['dir']
-          cluster_status_file = "#{dir}/current_cluster_status"
-
-          if File.exist?(cluster_status_file)
-            File.open(cluster_status_file).read.chomp == 'master'
-          else
-            # If the file doesn't exist, then we are most likely doing
-            # the initial setup, because keepalived must be configured
-            # after everything else.  In this case, we'll consider
-            # ourself the master if we're defined as the bootstrap
-            # server
-            is_bootstrap_server?(node)
-          end
-        else
-          false # frontends can't be masters, by definition
-        end
       end
-    end
-
-    # Determine if the machine is currently operating as the secondary
-    # backend in an HA setup.
-    #
-    # @param node [Chef::Node] node
-    # @return [Boolean]
-    def self.backend_secondary?(node)
-      ha?(node) && backend?(node) && !is_data_master?(node)
     end
 
     # Determine if the machine is set up for a standalone topology
@@ -93,15 +65,6 @@ module EnterpriseChef
     def self.tier?(node)
       project_name = node['enterprise']['name']
       node[project_name]['topology'] == 'tier'
-    end
-
-    # Determine if the machine is set up for a HA topology
-    #
-    # @param node [Chef::Node] node
-    # @return [Boolean]
-    def self.ha?(node)
-      project_name = node['enterprise']['name']
-      node[project_name]['topology'] == 'ha'
     end
 
     # Determine if the machine should be running backend services,
