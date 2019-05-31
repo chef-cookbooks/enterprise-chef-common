@@ -246,16 +246,6 @@ describe 'enterprise_test::component_runit_supervisor_create' do
         it_behaves_like 'sysvinit create'
       end
 
-      context 'when on Fedora' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'fedora', version: '25', step_into: ['component_runit_supervisor'] do |node|
-            node.default['init_package'] = 'systemd'
-          end
-        end
-
-        it_behaves_like 'systemd create'
-      end
-
       context 'when on RHEL 5' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'centos', version: '5.11',
@@ -345,16 +335,6 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
         end
 
         it_behaves_like 'sysvinit delete'
-      end
-
-      context 'when on Fedora' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'fedora', version: '25', step_into: ['component_runit_supervisor'] do |node|
-            node.default['init_package'] = 'systemd'
-          end
-        end
-
-        it_behaves_like 'systemd delete'
       end
 
       context 'when on RHEL 5' do
