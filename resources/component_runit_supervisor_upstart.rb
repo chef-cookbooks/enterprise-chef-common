@@ -21,9 +21,7 @@ include ComponentRunitSupervisorResourceMixin
 provides :component_runit_supervisor, platform_family: 'rhel' do |node|
   node['platform_version'].to_i == 6
 end
-provides :component_runit_supervisor, platform: 'fedora' do |node|
-  node['platform_version'].to_i <= 14
-end
+
 provides :component_runit_supervisor,
          platform: %w(amazon ubuntu)
 

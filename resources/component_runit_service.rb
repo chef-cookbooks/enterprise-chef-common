@@ -45,19 +45,13 @@ action :enable do
   svlogd_size = new_resource.svlogd_size || node[new_resource.package][new_resource.component]['log_rotation']['file_maxbytes']
   svlogd_num = new_resource.svlogd_num || node[new_resource.package][new_resource.component]['log_rotation']['num_to_keep']
 
-  # runit resources don't support reloading the log service as an action :(
-  execute "restart_#{new_resource.component}_log_service" do
-    command "#{node['runit']['sv_bin']} restart #{node['runit']['sv_dir']}/#{new_resource.component}/log"
-    action :nothing
-  end
-
   template "#{log_directory}/config" do
     source 'config.svlogd'
     cookbook 'enterprise'
     mode '0644'
     owner 'root'
     group 'root'
-    notifies :run, "execute[restart_#{new_resource.component}_log_service]"
+    notifies :reload_log, "runit_service[#{new_resource.component}]", :delayed
     variables(
       svlogd_size: svlogd_size,
       svlogd_num: svlogd_num
@@ -68,33 +62,12 @@ action :enable do
     action :enable
     retries 20
     control new_resource.control if new_resource.control
+    use_init_script_sv_link true
     options(
       log_directory: log_directory
     )
     new_resource.runit_attributes.each do |attr_name, attr_value|
       send(attr_name.to_sym, attr_value)
-    end
-  end
-
-  # Keepalive management
-  #
-  # Our keepalived setup knows which services it must manage by
-  # looking for a 'keepalive_me' sentinel file in the service's
-  # directory.
-  if EnterpriseChef::Helpers.ha?(node)
-    # We need special handling for the ha param, as it's a boolean and
-    # could be false, so we explicitly check for nil?
-    is_keepalive_service = if new_resource.ha.nil?
-                             node[new_resource.package][new_resource.component]['ha']
-                           else
-                             new_resource.ha
-                           end
-    file "#{node['runit']['sv_dir']}/#{new_resource.component}/keepalive_me" do
-      action is_keepalive_service ? :create : :delete
-    end
-
-    file "#{node['runit']['sv_dir']}/#{new_resource.component}/down" do
-      action is_keepalive_service ? :create : :delete
     end
   end
 end
@@ -105,7 +78,7 @@ action :down do
   end
 end
 
-[:start, :restart, :stop, :reload, :disable].each do |action_name|
+[:start, :restart, :stop, :reload, :disable, :create].each do |action_name|
   action action_name do
     runit_service new_resource.component do
       action action_name

@@ -23,11 +23,6 @@ describe 'component_runit_service' do
         expect(chef_run).to enable_component_runit_service('sweetservice')
       end
 
-      it 'creates a resource to restart the component\'s svlog service, but does not run it yet' do
-        expect(chef_run).to nothing_execute('restart_sweetservice_log_service')
-          .with(command: '/opt/runit restart /var/opt/runit/sweetservice/log')
-      end
-
       it 'renders the svlogd template' do
         expect(chef_run).to create_template('/var/log/awesomeproduct/sweetservice/config').with(
           owner: 'root',
@@ -42,7 +37,7 @@ describe 'component_runit_service' do
       end
 
       it 'notifies the svlog service restarter to run if the svlog template renders with changes' do
-        expect(chef_run.template('/var/log/awesomeproduct/sweetservice/config')).to notify('execute[restart_sweetservice_log_service]')
+        expect(chef_run.template('/var/log/awesomeproduct/sweetservice/config')).to notify('runit_service[sweetservice]')
       end
 
       it 'enables a runit service' do
@@ -138,66 +133,6 @@ describe 'component_runit_service' do
         expect(chef_run).to enable_runit_service('arbitraryrunit').with(
           log_processor: 'arbitrariness'
         )
-      end
-    end
-
-    context 'keepalive management in an HA topology' do
-      default_attributes['awesomeproduct']['topology'] = 'ha'
-      default_attributes['awesomeproduct']['haservice']['log_directory'] = '/var/log/awesomeproduct/haservice'
-      default_attributes['awesomeproduct']['haservice']['log_rotation']['num_to_keep'] = 42
-      default_attributes['awesomeproduct']['haservice']['log_rotation']['file_maxbytes'] = 8675309
-
-      recipe do
-        component_runit_service 'haservice' do
-          package 'awesomeproduct'
-        end
-      end
-
-      context 'by default' do
-        it { is_expected.to delete_file('/var/opt/runit/haservice/keepalive_me') }
-        it { is_expected.to delete_file('/var/opt/runit/haservice/down') }
-      end
-
-      context 'when HA is disabled for the component' do
-        context 'via node attributes' do
-          default_attributes['awesomeproduct']['haservice']['ha'] = false
-
-          it { is_expected.to delete_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to delete_file('/var/opt/runit/haservice/down') }
-        end
-
-        context 'via resource parameters' do
-          recipe do
-            component_runit_service 'haservice' do
-              package 'awesomeproduct'
-              ha false
-            end
-          end
-
-          it { is_expected.to delete_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to delete_file('/var/opt/runit/haservice/down') }
-        end
-      end
-
-      context 'when HA is enabled for the component' do
-        context 'via node attributes' do
-          default_attributes['awesomeproduct']['haservice']['ha'] = true
-
-          it { is_expected.to create_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to create_file('/var/opt/runit/haservice/down') }
-        end
-
-        context 'via resource parameters' do
-          recipe do
-            component_runit_service 'haservice' do
-              package 'awesomeproduct'
-              ha true
-            end
-          end
-
-          it { is_expected.to create_file('/var/opt/runit/haservice/keepalive_me') }
-          it { is_expected.to create_file('/var/opt/runit/haservice/down') }
-        end
       end
     end
   end

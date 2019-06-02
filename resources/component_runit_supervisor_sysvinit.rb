@@ -21,10 +21,6 @@ include ComponentRunitSupervisorResourceMixin
 provides :component_runit_supervisor, platform_family: 'suse' do |node|
   node['platform_version'].to_i == 11
 end
-provides :component_runit_supervisor, platform: 'debian'
-provides :component_runit_supervisor, platform_family: 'rhel' do |node|
-  node['platform_version'].to_i == 5
-end
 
 action :create do
   execute "echo '#{svdir_line}' >> /etc/inittab" do
