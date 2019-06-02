@@ -2,13 +2,16 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
-## 0.15.0 WIP
+## 0.15.0 (2019-06-03)
 
-- Remove fedora from the metadata since we don't actually require it
-- Refactor component_runit_service to use the new :reload_log action in runit cookbook 5.1's runit_service resource
-- Removed the chefspec matchers that aren't needed by modern chefspec
+- Update for and require the new runit cookbook v5.0.1
+- Remove support for keepalived in Chef HA
+- Remove the ChefSpec matchers that are no longer necessary with modern ChefSpec
+- Remove fedora from the metadata since we don't actually support it
+- Refactor component_runit_service to use the new :reload_log action in runit cookbook 5.X's runit_service resource
 - Require Chef 13 or later
 - Remove support for Debian < 8 and RHEL < 6
+- Update the specs for modern platforms
 
 ## 0.14.2 (2018-11-28)
 
