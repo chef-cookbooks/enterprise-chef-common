@@ -23,11 +23,6 @@ describe 'component_runit_service' do
         expect(chef_run).to enable_component_runit_service('sweetservice')
       end
 
-      it 'creates a resource to restart the component\'s svlog service, but does not run it yet' do
-        expect(chef_run).to nothing_execute('restart_sweetservice_log_service')
-          .with(command: '/opt/runit restart /var/opt/runit/sweetservice/log')
-      end
-
       it 'renders the svlogd template' do
         expect(chef_run).to create_template('/var/log/awesomeproduct/sweetservice/config').with(
           owner: 'root',

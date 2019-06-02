@@ -8,6 +8,7 @@ This file is used to list changes made in each version of the enterprise cookboo
 - Refactor component_runit_service to use the new :reload_log action in runit cookbook 5.1's runit_service resource
 - Removed the chefspec matchers that aren't needed by modern chefspec
 - Require Chef 13 or later
+- Remove support for Debian < 8 and RHEL < 6
 
 ## 0.14.2 (2018-11-28)
 
