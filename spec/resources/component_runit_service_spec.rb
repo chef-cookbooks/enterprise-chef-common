@@ -42,7 +42,7 @@ describe 'component_runit_service' do
       end
 
       it 'notifies the svlog service restarter to run if the svlog template renders with changes' do
-        expect(chef_run.template('/var/log/awesomeproduct/sweetservice/config')).to notify('execute[restart_sweetservice_log_service]')
+        expect(chef_run.template('/var/log/awesomeproduct/sweetservice/config')).to notify('runit_service[sweetservice]')
       end
 
       it 'enables a runit service' do
