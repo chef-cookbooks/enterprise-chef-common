@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 0.15.1 (2019-06-02)
+
+- Minor testing updates and metadata fixes - [@tas50](https://github.com/tas50)
+
 ## 0.15.0 (2019-06-03)
 
 - Update for and require the new runit cookbook v5.0.1
