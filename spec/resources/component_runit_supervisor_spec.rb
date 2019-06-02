@@ -345,7 +345,6 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
         it_behaves_like 'systemd delete'
       end
 
-
       context 'when on RHEL 6 with upstart' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'centos', version: '6',
