@@ -6,7 +6,7 @@ property :admin_password, String, required: false
 property :host, String, required: false
 
 #
-# Cookbook Name:: enterprise
+# Cookbook:: enterprise
 # Resource:: pg_user
 #
 # Copyright:: 2018, Chef Software, Inc.

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: enterprise
+# Cookbook:: enterprise
 # Resource:: component_runit_service
 #
 # Copyright:: 2018, Chef Software, Inc.

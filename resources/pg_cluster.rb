@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: enterprise
+# Cookbook:: enterprise
 # Resource:: pg_cluster
 #
 # Copyright:: 2018, Chef Software, Inc.
