@@ -223,7 +223,7 @@ describe 'enterprise_test::component_runit_supervisor_create' do
 
   before :each do
     # Set the node project_name
-    runner.node.normal['enterprise']['name'] = enterprise_name
+    runner.node.override['enterprise']['name'] = enterprise_name
   end
 
   describe 'component_runit_supervisor resource' do
@@ -313,7 +313,7 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
 
   before :each do
     # Set the node project_name
-    runner.node.normal['enterprise']['name'] = enterprise_name
+    runner.node.override['enterprise']['name'] = enterprise_name
   end
 
   describe 'component_runit_supervisor resource' do
