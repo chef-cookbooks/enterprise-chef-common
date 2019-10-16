@@ -2,7 +2,7 @@
 # Cookbook:: enterprise
 # Resource:: pg_cluster
 #
-# Copyright:: 2018, Chef Software, Inc.
+# Copyright:: 2018-2019, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Initialize a PostgreSQL database cluster.  Ensures the data
+# Initialize a PostgreSQL database cluster. Ensures the data
 # directory exists, runs initdb, and sets up postgresql.conf and
 # pg_hba.conf files.
 #
@@ -26,7 +26,7 @@
 # NOTE:
 #
 # Uses the value of node[project_name]['postgresql']['username'] as
-# the user to run the initdb command.  This user will also be the
+# the user to run the initdb command. This user will also be the
 # owner of the data directory and configuration files.
 #
 # Additionally, the node[project_name]['postgresql'] hash is used
