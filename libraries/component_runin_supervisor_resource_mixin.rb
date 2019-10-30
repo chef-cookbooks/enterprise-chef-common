@@ -2,7 +2,6 @@ module ComponentRunitSupervisorResourceMixin
   def self.append_features(klass)
     klass.class_eval do
       resource_name :component_runit_supervisor
-      actions :create, :delete
       default_action :create
 
       property :ctl_name, kind_of: String, required: true
