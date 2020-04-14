@@ -25,11 +25,11 @@ module EnterpriseChef
   end
 end
 
-Chef::Recipe.send(:include, EnterpriseChef::DSL)
-Chef::Provider.send(:include, EnterpriseChef::DSL)
-Chef::Resource.send(:include, EnterpriseChef::DSL)
+Chef::Recipe.include EnterpriseChef::DSL
+Chef::Provider.include EnterpriseChef::DSL
+Chef::Resource.include EnterpriseChef::DSL
 
 # We still have a small number of definitions in use that need these;
 # otherwise, you have to know that the thing that you're working with
 # isn't a real resource and you'll have to jump through hoops.
-Chef::ResourceDefinition.send(:include, EnterpriseChef::DSL)
+Chef::ResourceDefinition.include EnterpriseChef::DSL
