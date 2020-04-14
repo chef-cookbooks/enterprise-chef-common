@@ -2,6 +2,16 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## Unreleased
+
+- resolved cookstyle error: libraries/dsl.rb:28:14 warning: `Lint/SendWithMixinArgument`
+- resolved cookstyle error: libraries/dsl.rb:29:16 warning: `Lint/SendWithMixinArgument`
+- resolved cookstyle error: libraries/dsl.rb:30:16 warning: `Lint/SendWithMixinArgument`
+- resolved cookstyle error: libraries/dsl.rb:35:26 warning: `Lint/SendWithMixinArgument`
+- resolved cookstyle error: metadata.rb:6:1 refactor: `ChefRedundantCode/LongDescriptionMetadata`
+- resolved cookstyle error: resources/component_runit_service.rb:36:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
+- resolved cookstyle error: resources/pg_user.rb:3:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
+
 ## 0.15.1 (2019-06-02)
 
 - Minor testing updates and metadata fixes - [@tas50](https://github.com/tas50)

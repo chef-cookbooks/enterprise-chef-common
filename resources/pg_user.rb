@@ -1,6 +1,6 @@
 property :username, String, name_property: true
 property :password, String, required: true
-property :superuser, [TrueClass, FalseClass], default: false
+property :superuser, [true, false], default: false
 property :admin_username, String, required: false
 property :admin_password, String, required: false
 property :host, String, required: false

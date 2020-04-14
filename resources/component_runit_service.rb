@@ -33,7 +33,7 @@ property :package, String, default: 'private_chef'
 property :log_directory, String # where the runit service will manage itself
 property :svlogd_size, Integer # log rotation : a size limit for log files
 property :svlogd_num, Integer # log rotation : the number of log files to keep
-property :ha, [TrueClass, FalseClass] # is this a highly-available service?
+property :ha, [true, false] # is this a highly-available service?
 property :control, Array # control signal overrides for runit and runsv
 
 # :runit_attributes - optionally set other properties on the runit_service
