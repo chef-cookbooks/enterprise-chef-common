@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the enterprise cookboo
 
 ## Unreleased
 
+- resolved cookstyle error: recipes/runit.rb:18:53 convention: `Layout/TrailingWhitespace`
+- resolved cookstyle error: recipes/runit.rb:18:54 refactor: `ChefModernize/FoodcriticComments`
 - resolved cookstyle error: libraries/dsl.rb:28:14 warning: `Lint/SendWithMixinArgument`
 - resolved cookstyle error: libraries/dsl.rb:29:16 warning: `Lint/SendWithMixinArgument`
 - resolved cookstyle error: libraries/dsl.rb:30:16 warning: `Lint/SendWithMixinArgument`
