@@ -2,7 +2,7 @@ if service('sshd').type == 'upstart' ||
    # service identifies redhat 6 as sysv, but we install as upstart
    (os['family'] == 'redhat' && os['release'].to_i == 6)
   describe command('initctl status testproject-runsvdir') do
-    its(:stdout) { should match(/start\/running/) }
+    its(:stdout) { should match(%r{start/running}) }
   end
 
   describe file('/etc/init/testproject-runsvdir.conf') do

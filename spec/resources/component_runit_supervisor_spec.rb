@@ -223,7 +223,7 @@ describe 'enterprise_test::component_runit_supervisor_create' do
 
   before :each do
     # Set the node project_name
-    runner.node.normal['enterprise']['name'] = enterprise_name
+    runner.node.override['enterprise']['name'] = enterprise_name
   end
 
   describe 'component_runit_supervisor resource' do
@@ -264,15 +264,6 @@ describe 'enterprise_test::component_runit_supervisor_create' do
         it_behaves_like 'systemd create'
       end
 
-      context 'when on SuSE 11 with sysv' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'suse', version: '11',
-                                   step_into: ['component_runit_supervisor']
-        end
-
-        it_behaves_like 'sysvinit create'
-      end
-
       context 'when on SuSE 12 with systemd' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'suse', version: '12', step_into: ['component_runit_supervisor'] do |node|
@@ -304,7 +295,7 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
 
   before :each do
     # Set the node project_name
-    runner.node.normal['enterprise']['name'] = enterprise_name
+    runner.node.override['enterprise']['name'] = enterprise_name
   end
 
   describe 'component_runit_supervisor resource' do
