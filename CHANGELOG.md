@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the enterprise cookboo
 
 ## Unreleased
 
+- resolved cookstyle error: libraries/component_runin_supervisor_resource_mixin.rb:4:7 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/component_runit_service.rb:21:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
 - resolved cookstyle error: recipes/runit.rb:18:53 convention: `Layout/TrailingWhitespace`
 - resolved cookstyle error: recipes/runit.rb:18:54 refactor: `ChefModernize/FoodcriticComments`
 - resolved cookstyle error: libraries/dsl.rb:28:14 warning: `Lint/SendWithMixinArgument`
