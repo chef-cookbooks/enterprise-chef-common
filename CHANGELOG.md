@@ -2,19 +2,21 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
-## Unreleased
+## 0.15.2 (2020-06-02)
 
-- resolved cookstyle error: libraries/component_runin_supervisor_resource_mixin.rb:4:7 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
-- resolved cookstyle error: resources/component_runit_service.rb:21:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
-- resolved cookstyle error: recipes/runit.rb:18:53 convention: `Layout/TrailingWhitespace`
-- resolved cookstyle error: recipes/runit.rb:18:54 refactor: `ChefModernize/FoodcriticComments`
-- resolved cookstyle error: libraries/dsl.rb:28:14 warning: `Lint/SendWithMixinArgument`
-- resolved cookstyle error: libraries/dsl.rb:29:16 warning: `Lint/SendWithMixinArgument`
-- resolved cookstyle error: libraries/dsl.rb:30:16 warning: `Lint/SendWithMixinArgument`
-- resolved cookstyle error: libraries/dsl.rb:35:26 warning: `Lint/SendWithMixinArgument`
-- resolved cookstyle error: metadata.rb:6:1 refactor: `ChefRedundantCode/LongDescriptionMetadata`
-- resolved cookstyle error: resources/component_runit_service.rb:36:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
-- resolved cookstyle error: resources/pg_user.rb:3:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
+- Update file headers to match our standard - [@tas50](https://github.com/tas50)
+- Cookstyle fixes including Chef Infra Client 16 compatibility - [@xorimabot](https://github.com/xorimabot)
+  - resolved cookstyle error: libraries/component_runin_supervisor_resource_mixin.rb:4:7 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: resources/component_runit_service.rb:21:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+  - resolved cookstyle error: recipes/runit.rb:18:53 convention: `Layout/TrailingWhitespace`
+  - resolved cookstyle error: recipes/runit.rb:18:54 refactor: `ChefModernize/FoodcriticComments`
+  - resolved cookstyle error: libraries/dsl.rb:28:14 warning: `Lint/SendWithMixinArgument`
+  - resolved cookstyle error: libraries/dsl.rb:29:16 warning: `Lint/SendWithMixinArgument`
+  - resolved cookstyle error: libraries/dsl.rb:30:16 warning: `Lint/SendWithMixinArgument`
+  - resolved cookstyle error: libraries/dsl.rb:35:26 warning: `Lint/SendWithMixinArgument`
+  - resolved cookstyle error: metadata.rb:6:1 refactor: `ChefRedundantCode/LongDescriptionMetadata`
+  - resolved cookstyle error: resources/component_runit_service.rb:36:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
+  - resolved cookstyle error: resources/pg_user.rb:3:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
 
 ## 0.15.1 (2019-06-02)
 
