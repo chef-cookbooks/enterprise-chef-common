@@ -18,6 +18,9 @@
 #
 include ComponentRunitSupervisorResourceMixin
 
+resource_name :component_runit_supervisor_upstart
+provides :component_runit_supervisor_upstart
+
 provides :component_runit_supervisor, platform_family: 'rhel' do |node|
   node['platform_version'].to_i == 6
 end

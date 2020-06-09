@@ -18,6 +18,9 @@
 #
 include ComponentRunitSupervisorResourceMixin
 
+resource_name :component_runit_supervisor_systemd
+provides :component_runit_supervisor_systemd
+
 provides :component_runit_supervisor do |node|
   node['init_package'] == 'systemd'
 end

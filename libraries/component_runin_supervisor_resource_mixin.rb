@@ -1,7 +1,6 @@
 module ComponentRunitSupervisorResourceMixin
   def self.append_features(klass)
     klass.class_eval do
-      provides :component_runit_supervisor
       actions :create, :delete
       default_action :create
 

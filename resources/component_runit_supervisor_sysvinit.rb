@@ -18,6 +18,9 @@
 #
 include ComponentRunitSupervisorResourceMixin
 
+resource_name :component_runit_supervisor_sysvinit
+provides :component_runit_supervisor_sysvinit
+
 provides :component_runit_supervisor, platform_family: 'suse' do |node|
   node['platform_version'].to_i == 11
 end

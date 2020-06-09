@@ -19,6 +19,7 @@
 # A runit service wrapper for a chef component within an omnibus project
 #
 provides :component_runit_service
+resource_name :component_runit_service
 
 # :component is the name of the component/service of the project for which
 # this resource will manage a runit definition
