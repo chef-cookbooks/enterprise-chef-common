@@ -5,6 +5,6 @@ if service('sshd').type == 'sysv' && !(os['family'] == 'redhat' && os['release']
   end
 
   describe file('/etc/inittab') do
-    its(:content) { should_not match(/\/opt\/tp\/embedded\/bin\/runsvdir-start/) }
+    its(:content) { should_not match(%r{/opt/tp/embedded/bin/runsvdir-start}) }
   end
 end
