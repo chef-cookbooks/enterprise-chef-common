@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## Unreleased
+
+- resolved cookstyle error: libraries/dsl.rb:28:1 refactor: `ChefCorrectness/IncorrectLibraryInjection`
+- resolved cookstyle error: libraries/dsl.rb:29:1 refactor: `ChefCorrectness/IncorrectLibraryInjection`
+
 ## 0.15.2 (2020-06-02)
 
 - Update file headers to match our standard - [@tas50](https://github.com/tas50)
