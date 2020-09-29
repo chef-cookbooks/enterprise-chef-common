@@ -25,8 +25,7 @@ module EnterpriseChef
   end
 end
 
-Chef::Recipe.include EnterpriseChef::DSL
-Chef::Provider.include EnterpriseChef::DSL
+Chef::DSL::Recipe.include EnterpriseChef::DSL
 Chef::Resource.include EnterpriseChef::DSL
 
 # We still have a small number of definitions in use that need these;
