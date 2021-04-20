@@ -3,7 +3,7 @@ maintainer 'Chef Software, Inc.'
 maintainer_email 'cookbooks@chef.io'
 license 'Apache-2.0'
 description 'Installs common libraries and resources for Chef server and add-ons'
-version '0.15.2'
+version '1.0.0'
 
 depends 'runit', '= 5.1.1'
 

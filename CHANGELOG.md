@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 1.0.0 (2021-04-19)
+
+- Cleanup and modernize the specs a bit - [@tas50](https://github.com/tas50)
+- Cookstyle Bot Auto Corrections with Cookstyle 6.15.9 - [@cookstyle](https://github.com/cookstyle)
+- Cookstyle Bot Auto Corrections with Cookstyle 6.19.5 - [@cookstyle](https://github.com/cookstyle)
+- Remove support for sysv and upstart / Require systemd - [@tas50](https://github.com/tas50)
+
 ## 0.15.2 (2020-06-02)
 
 - Update file headers to match our standard - [@tas50](https://github.com/tas50)
