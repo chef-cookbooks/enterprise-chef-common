@@ -43,7 +43,7 @@ Creates a runit runsvdir process to monitor component runit processes.
 
 - `name` - The name of the project
 - `ctl_name` - Name of the command used to manage the services. Defaults to `#{name}-ctl`.
-- `sysvinit_id - Two-letter prefix used to identify the service on sysvinit-style systems. Defaults to`"SV"`.
+- `sysvinit_id` - Two-letter prefix used to identify the service on sysvinit-style systems. Defaults to`"SV"`.
 - `install_path` - Path where the project is installed.
 
 #### Actions
@@ -54,12 +54,8 @@ Creates a runit runsvdir process to monitor component runit processes.
 #### Providers
 
 - `Chef::Provider::ComponentRunitSupervisor::Systemd` - For systems using systemd.
-- `Chef::Provider::ComponentRunitSupervisor::Sysvinit` - For systems using sysvinit.
-- `Chef::Provider::ComponentRunitSupervisor::Upstart` - For systems using Upstart.
 
 ## Testing
-
-[ChefDK](https://downloads.chef.io/chefdk) must be installed
 
 ### ChefSpec
 

@@ -59,79 +59,6 @@ RSpec.shared_examples 'sysvinit create' do
   end
 end
 
-RSpec.shared_examples 'upstart create' do
-  before :each do
-    stub_command('initctl status opscode-runsvdir | grep start').and_return true
-    stub_command("initctl status #{enterprise_name}-runsvdir | grep stop").and_return true
-  end
-
-  it 'stops the previously named service' do
-    expect(chef_run).to run_execute('initctl stop opscode-runsvdir').with(
-      retries: 30
-    )
-  end
-
-  it 'deletes /etc/init/opscode-runsvdir.conf' do
-    expect(chef_run).to delete_file '/etc/init/opscode-runsvdir.conf'
-  end
-
-  it 'renders the init template' do
-    expect(chef_run).to create_template("/etc/init/#{enterprise_name}-runsvdir.conf").with(
-      owner: 'root',
-      group: 'root',
-      mode: '0644',
-      source: 'init-runsvdir.erb',
-      variables: {
-        install_path: '/opt/tp',
-      }
-    )
-  end
-
-  it 'runs the status command' do
-    expect(chef_run).to run_execute("initctl status #{enterprise_name}-runsvdir").with(
-      retries: 30
-    )
-  end
-
-  it 'runs the start command' do
-    expect(chef_run).to run_execute("initctl start #{enterprise_name}-runsvdir").with(
-      retries: 30
-    )
-  end
-
-  context 'when the enterprise_name is private_chef' do
-    let(:enterprise_name) { 'private_chef' }
-
-    before :each do
-      stub_command('initctl status private-chef-runsvdir | grep stop').and_return true
-    end
-
-    it 'renders the init template' do
-      expect(chef_run).to create_template('/etc/init/private-chef-runsvdir.conf').with(
-        owner: 'root',
-        group: 'root',
-        mode: '0644',
-        source: 'init-runsvdir.erb',
-        variables: {
-          install_path: '/opt/tp',
-        }
-      )
-    end
-
-    it 'runs the status command' do
-      expect(chef_run).to run_execute('initctl status private-chef-runsvdir').with(
-        retries: 30
-      )
-    end
-
-    it 'runs the start command' do
-      expect(chef_run).to run_execute('initctl start private-chef-runsvdir').with(
-        retries: 30
-      )
-    end
-  end
-end
-
 RSpec.shared_examples 'systemd delete' do
   it 'stops the service' do
     expect(chef_run).to stop_service("#{enterprise_name}-runsvdir-start.service").with(
@@ -176,44 +103,6 @@ RSpec.shared_examples 'sysvinit delete' do
   end
 end
 
-RSpec.shared_examples 'upstart delete' do
-  it 'stops the service' do
-    expect(chef_run).to stop_service("#{enterprise_name}-runsvdir").with(
-      provider: Chef::Provider::Service::Upstart
-    )
-  end
-
-  it 'disables the service' do
-    expect(chef_run).to disable_service("#{enterprise_name}-runsvdir").with(
-      provider: Chef::Provider::Service::Upstart
-    )
-  end
-
-  it 'deletes the init file' do
-    expect(chef_run).to delete_file("/etc/init/#{enterprise_name}-runsvdir.conf")
-  end
-
-  context 'when the enterprise_name is private_chef' do
-    let(:enterprise_name) { 'private_chef' }
-
-    it 'stops the service' do
-      expect(chef_run).to stop_service('private-chef-runsvdir').with(
-        provider: Chef::Provider::Service::Upstart
-      )
-    end
-
-    it 'disables the service' do
-      expect(chef_run).to disable_service('private-chef-runsvdir').with(
-        provider: Chef::Provider::Service::Upstart
-      )
-    end
-
-    it 'deletes the init file' do
-      expect(chef_run).to delete_file('/etc/init/private-chef-runsvdir.conf')
-    end
-  end
-end
-
 describe 'enterprise_test::component_runit_supervisor_create' do
   let(:runner) do
     ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04', step_into: ['component_runit_supervisor'])
@@ -228,16 +117,7 @@ describe 'enterprise_test::component_runit_supervisor_create' do
 
   describe 'component_runit_supervisor resource' do
     describe 'action :create' do
-      context 'when on Amazon Linux 201X with upstart' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'amazon', version: '2018.03',
-                                   step_into: ['component_runit_supervisor']
-        end
-
-        it_behaves_like 'upstart create'
-      end
-
-      context 'when on Amazon Linux 2 with systemd' do
+      context 'when on Amazon Linux 2' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'amazon', version: '2',
                                    step_into: ['component_runit_supervisor']
@@ -246,16 +126,7 @@ describe 'enterprise_test::component_runit_supervisor_create' do
         it_behaves_like 'systemd create'
       end
 
-      context 'when on RHEL 6 with upstart' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'centos', version: '6',
-                                   step_into: ['component_runit_supervisor']
-        end
-
-        it_behaves_like 'upstart create'
-      end
-
-      context 'when on RHEL 7 with systemd' do
+      context 'when on RHEL 7' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'centos', version: '7', step_into: ['component_runit_supervisor'] do |node|
           end
@@ -264,7 +135,7 @@ describe 'enterprise_test::component_runit_supervisor_create' do
         it_behaves_like 'systemd create'
       end
 
-      context 'when on SuSE 12 with systemd' do
+      context 'when on SuSE 12' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'suse', version: '12', step_into: ['component_runit_supervisor'] do |node|
             node.default['init_package'] = 'systemd'
@@ -300,24 +171,6 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
 
   describe 'component_runit_supervisor resource' do
     describe 'action :delete' do
-      context 'when on Amazon Linux' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'amazon', version: '2017.03',
-                                   step_into: ['component_runit_supervisor']
-        end
-
-        it_behaves_like 'upstart delete'
-      end
-
-      context 'when on Amazon 201X' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'amazon', version: '2018.03',
-                                   step_into: ['component_runit_supervisor']
-        end
-
-        it_behaves_like 'upstart delete'
-      end
-
       context 'when on Amazon 2' do
         let(:runner) do
           ChefSpec::SoloRunner.new platform: 'amazon', version: '2',
@@ -325,15 +178,6 @@ describe 'enterprise_test::component_runit_supervisor_delete' do
         end
 
         it_behaves_like 'systemd delete'
-      end
-
-      context 'when on RHEL 6 with upstart' do
-        let(:runner) do
-          ChefSpec::SoloRunner.new platform: 'centos', version: '6',
-                                   step_into: ['component_runit_supervisor']
-        end
-
-        it_behaves_like 'upstart delete'
       end
 
       context 'when on RHEL 7' do
