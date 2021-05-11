@@ -18,7 +18,8 @@
 #
 include ComponentRunitSupervisorResourceMixin
 
-provides :component_runit_supervisor do |node|
+provides :component_runit_supervisor
+unified_mode true do |node|
   node['init_package'] == 'systemd'
 end
 

@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## Unreleased
+
+- resolved cookstyle error: resources/component_runit_service.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+- resolved cookstyle error: resources/component_runit_supervisor_systemd.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+
 ## 1.0.0 (2021-04-19)
 
 - Cleanup and modernize the specs a bit - [@tas50](https://github.com/tas50)
