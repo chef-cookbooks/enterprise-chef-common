@@ -21,6 +21,7 @@
 
 resource_name :component_runit_service
 provides :component_runit_service
+unified_mode true
 
 # :component is the name of the component/service of the project for which
 # this resource will manage a runit definition
