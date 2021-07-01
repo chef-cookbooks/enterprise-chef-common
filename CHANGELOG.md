@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 1.1.0 (2021-07-01)
+
+- Work with Chef Infra Client 16 - [@tas50](https://github.com/tas50)
+
 ## 1.0.0 (2021-04-19)
 
 - Cleanup and modernize the specs a bit - [@tas50](https://github.com/tas50)
