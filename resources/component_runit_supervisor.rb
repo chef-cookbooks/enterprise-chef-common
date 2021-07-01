@@ -16,11 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 include ComponentRunitSupervisorResourceMixin
 
-provides :component_runit_supervisor do |node|
-  node['init_package'] == 'systemd'
-end
+provides :component_runit_supervisor
 
 action :create do
   template "/etc/systemd/system/#{unit_name}" do
