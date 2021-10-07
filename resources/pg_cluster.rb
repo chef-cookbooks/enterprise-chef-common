@@ -31,6 +31,7 @@
 #
 # Additionally, the node[project_name]['postgresql'] hash is used
 # for configuration file template creation.
+unified_mode true
 
 property :data_dir, String, name_property: true
 property :encoding, String, default: 'SQL_ASCII'
