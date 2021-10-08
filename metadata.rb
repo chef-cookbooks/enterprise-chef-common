@@ -10,7 +10,7 @@ depends 'runit', '>= 5.1.1'
 source_url 'https://github.com/chef-cookbooks/enterprise-chef-common'
 issues_url 'https://github.com/chef-cookbooks/enterprise-chef-common/issues'
 
-chef_version '>= 13'
+chef_version '>= 15.3'
 
 %w(redhat oracle centos scientific amazon debian ubuntu).each do |os|
   supports os
