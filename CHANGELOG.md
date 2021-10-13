@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the enterprise cookbook.
 
+## 1.2.0 (2021-10-13)
+
+- Update resources to set `unified_mode true` for compatibility with future Chef Infra Client releases
+
 ## 1.1.0 (2021-07-01)
 
 - Work with Chef Infra Client 16 - [@tas50](https://github.com/tas50)
