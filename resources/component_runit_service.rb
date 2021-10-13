@@ -18,6 +18,7 @@
 #
 # A runit service wrapper for a chef component within an omnibus project
 #
+unified_mode true
 
 resource_name :component_runit_service
 provides :component_runit_service

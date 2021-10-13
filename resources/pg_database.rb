@@ -16,6 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+unified_mode true
+
 property :database, String, name_property: true
 property :owner, String
 property :template, String, default: 'template0'

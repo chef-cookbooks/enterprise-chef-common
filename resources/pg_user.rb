@@ -1,10 +1,3 @@
-property :username, String, name_property: true
-property :password, String, required: true
-property :superuser, [true, false], default: false
-property :admin_username, String, required: false
-property :admin_password, String, required: false
-property :host, String, required: false
-
 #
 # Cookbook:: enterprise
 # Resource:: pg_user
@@ -27,6 +20,14 @@ property :host, String, required: false
 #
 # Uses the value of node[project_name]['postgresql']['username'] as
 # the user to run the user-creation psql command
+unified_mode true
+
+property :username, String, name_property: true
+property :password, String, required: true
+property :superuser, [true, false], default: false
+property :admin_username, String, required: false
+property :admin_password, String, required: false
+property :host, String, required: false
 
 action :create do
   project_name = node['enterprise']['name']
