@@ -43,34 +43,36 @@ property :control, Array # control signal overrides for runit and runsv
 # resource that are not explicitly supported by this resource
 property :runit_attributes, Hash, default: {}
 
-action :enable do
-  log_directory = new_resource.log_directory || node[new_resource.package][new_resource.component]['log_directory']
-  svlogd_size = new_resource.svlogd_size || node[new_resource.package][new_resource.component]['log_rotation']['file_maxbytes']
-  svlogd_num = new_resource.svlogd_num || node[new_resource.package][new_resource.component]['log_rotation']['num_to_keep']
+[:create, :enable].each do |action_name|
+  action action_name do
+    log_directory = new_resource.log_directory || node[new_resource.package][new_resource.component]['log_directory']
+    svlogd_size = new_resource.svlogd_size || node[new_resource.package][new_resource.component]['log_rotation']['file_maxbytes']
+    svlogd_num = new_resource.svlogd_num || node[new_resource.package][new_resource.component]['log_rotation']['num_to_keep']
 
-  template "#{log_directory}/config" do
-    source 'config.svlogd'
-    cookbook 'enterprise'
-    mode '0644'
-    owner 'root'
-    group 'root'
-    notifies :reload_log, "runit_service[#{new_resource.component}]", :delayed
-    variables(
-      svlogd_size: svlogd_size,
-      svlogd_num: svlogd_num
-    )
-  end
+    template "#{log_directory}/config" do
+      source 'config.svlogd'
+      cookbook 'enterprise'
+      mode '0644'
+      owner 'root'
+      group 'root'
+      notifies :reload_log, "runit_service[#{new_resource.component}]", :delayed
+      variables(
+        svlogd_size: svlogd_size,
+        svlogd_num: svlogd_num
+      )
+    end
 
-  runit_service new_resource.component do
-    action :enable
-    retries 20
-    control new_resource.control if new_resource.control
-    use_init_script_sv_link true
-    options(
-      log_directory: log_directory
-    )
-    new_resource.runit_attributes.each do |attr_name, attr_value|
-      send(attr_name.to_sym, attr_value)
+    runit_service new_resource.component do
+      action action_name
+      retries 20
+      control new_resource.control if new_resource.control
+      use_init_script_sv_link true
+      options(
+        log_directory: log_directory
+      )
+      new_resource.runit_attributes.each do |attr_name, attr_value|
+        send(attr_name.to_sym, attr_value)
+      end
     end
   end
 end
@@ -81,7 +83,7 @@ action :down do
   end
 end
 
-[:start, :restart, :stop, :reload, :disable, :create].each do |action_name|
+[:start, :restart, :stop, :reload, :disable].each do |action_name|
   action action_name do
     runit_service new_resource.component do
       action action_name
